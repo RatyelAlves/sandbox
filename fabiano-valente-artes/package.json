@@ -1,0 +1,12 @@
+{
+  "name": "fabiano-valente-artes",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "optimize-images": "node scripts/optimize-images.mjs",
+    "optimize-images:all": "node scripts/optimize-images.mjs && node scripts/patch-html-images.mjs"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.2"
+  }
+}

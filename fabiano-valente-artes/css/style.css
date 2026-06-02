@@ -1,0 +1,565 @@
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #000;
+  color: #fff;
+  padding: 8px 16px;
+  z-index: 2000;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 10px;
+}
+
+.review-box p {
+  margin: 0.5em 0;
+}
+
+.text a,
+.contact a {
+  color: #fff;
+}
+
+body {
+  font-family: "Manrope", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  overflow-y: scroll; /* Garante que a rolagem vertical esteja sempre disponível */
+}
+
+
+/* Personaliza a barra de rolagem no Chrome, Safari e outros navegadores baseados no Webkit */
+::-webkit-scrollbar {
+    width: 1px; /* Largura da barra de rolagem */
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.0); /* Cor transparente da barra de rolagem */
+    border-radius: 10px; /* Bordas arredondadas */
+  }
+  
+  ::-webkit-scrollbar-track {
+    background-color: transparent; /* Torna a área da trilha da rolagem transparente */
+  }
+
+/* Cabeçalho Responsivo -----------------------------------------------------------------------------------------------------------------------------------------------*/
+
+#header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 30px;
+  background-color: rgba(0, 0, 0, 0.0); /* Transparente */
+  color: white;
+  display: flex;
+  justify-content: space-between; /* Espaça logo e menu */
+  align-items: center; /* Alinha verticalmente */
+  box-sizing: border-box; /* Inclui o padding na largura total */    
+  transition: background-color 0.3s ease, padding 0.3s ease;
+  z-index: 1000;
+}
+
+#header.scrolled {
+  transform: translateY(-100%);
+}
+
+.logo img {
+height: 10vh; /* Ajuste o tamanho da logo */
+object-fit: contain;
+}
+
+#banner {
+  position: relative;
+  width: 100%;
+  height: 50vh;
+  background-image: image-set(
+    url('../img/banner.webp') type('image/webp'),
+    url('../img/banner.png') type('image/png')
+  );
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  text-align: right;
+}
+
+.banner-text{
+  font-size: 3rem;
+  font-family: "Bona Nova SC", serif;
+  font-weight: 400;
+  font-style: italic;
+  padding: 10px 50px;
+}
+
+/* Media queries para dispositivos móveis */
+
+@media (max-width: 768px) {
+    #banner {
+      background-position: center center;
+      justify-content: center;
+      padding-right: 0;
+      text-align: center;
+    }
+    .banner-text {
+      font-size: clamp(1.8rem, 8vw, 3rem);
+      padding: 8px 15px;
+    }
+  }
+  
+@media (max-width: 480px) {
+  #banner {
+    background-position: center center;
+  }
+  .banner-text {
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
+    padding: 5px 10px;
+  }
+}
+
+
+#whatsapp-button {
+  position: fixed; /* Fixa o botão na tela */
+  bottom: 20px; /* 20px da parte inferior da tela */
+  right: 20px; /* 20px da parte direita da tela */
+  background-color: #25d366; /* Cor verde do WhatsApp */
+  color: white;
+  border-radius: 50%; /* Faz o botão ser redondo */
+  width: 50px; /* Define a largura */
+  height: 50px; /* Define a altura */
+  display: flex; /* Usa flexbox para centralizar o ícone */
+  justify-content: center; /* Centraliza o ícone horizontalmente */
+  align-items: center; /* Centraliza o ícone verticalmente */
+  font-size: 25px; /* Ajusta o tamanho do ícone */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+  z-index: 9999;
+}
+
+#whatsapp-button:hover {
+  background-color: #128c7e; /* Cor mais escura quando o botão for hover */
+}
+
+#whatsapp-button i {
+  pointer-events: none; /* Impede que o ícone receba eventos de clique */
+}
+
+/*Localização ---------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+.redirect-div {
+  display: block;
+  position: relative;
+  width: calc(100% - 15px);
+  height: calc(50vh - 40px);
+  background-image: image-set(
+    url('../img/locate.webp') type('image/webp'),
+    url('../img/locate.jpg') type('image/jpeg')
+  );
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  cursor: pointer;
+  margin: 5px solid #fff;
+  border: 1px solid #c7c3c3;
+  border-radius: 10px;
+  margin: 5px auto;
+  overflow: hidden;
+  text-decoration: none;
+}
+
+.redirect-div .overlay-text {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.3); /* Fundo transparente */
+  color: rgb(255, 255, 255);
+  padding: 5px 10px;
+  border-radius: 50px;
+  font-size: 1.0em;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Media queries para telas menores */
+@media (max-width: 768px) {
+  .redirect-div .overlay-text {
+    font-size: 0.9em; /* Reduz tamanho do texto */
+  }
+}
+
+@media (max-width: 480px) {
+  .redirect-div .overlay-text {
+    font-size: 0.5em; /* Reduz ainda mais para telas muito pequenas */
+    padding: 8px 15px; /* Ajusta o espaçamento interno */
+  }
+}
+
+/* Lista Produtos e Serviços----------------------------------------------------------------------------------------------------------------------------- */
+
+
+.servicos_produtos p{
+  text-align: center
+}
+
+.products_title{
+  background-color: #fff;
+  padding: 5px; 
+  margin-bottom: 20px; 
+  text-align: center;
+}
+
+.grid-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 colunas */
+  gap: 20px; /* Espaçamento entre os itens */
+  padding: 0;
+  list-style: none; /* Remove marcadores de lista */
+  max-width: 1200px;
+  margin: 0 auto; /* Centralizar o grid */
+  margin-bottom: 25px;
+}
+
+/* Cada Item da Lista */
+.grid-item {
+  text-align: center;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  padding-top: 20px;
+}
+
+/* Imagens */
+.grid-item picture,
+.swiper-slide picture,
+.image picture {
+  display: block;
+}
+
+.grid-item img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* Texto abaixo das imagens */
+.grid-item p {
+  margin: 10px 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .grid-list {
+    grid-template-columns: repeat(2, 1fr); /* 2 colunas */
+  }
+}
+
+@media (max-width: 480px) {
+  .grid-list {
+    grid-template-columns: 1fr; /* 1 coluna */
+  }
+}
+
+.view-more p a {
+  justify-content: center;
+  text-decoration: none;
+  color: #2D2929; /* Define a cor dos links, opcional */
+}
+
+a {
+  color: rgb(255, 255, 255); /* Define a cor dos links, opcional */
+  text-decoration: none;
+  font-style: italic;
+}
+
+a:hover {
+    color: #B38212;
+}
+
+p a {
+    font-style: unset;
+}
+
+p a:hover {
+    color: #B38212; /* Altera a cor ao passar o mouse */
+}
+
+
+/* Chamada Carrossel Quadros Decoratios -------------------------------------------------------------------------------------------------------------------------------*/
+
+
+.carousel{
+  background-color: #fff;
+  padding-top: 10px;
+  text-align: center;
+}
+
+.swiper {
+  width: 98%;
+  margin: auto;
+}
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Benefícios -------------------------------------------------------------------------------------------------------------------------------------------------------- */
+
+.features-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  padding: 20px;
+  background-color: #fff;
+  margin-top: 5px;
+}
+
+.feature {
+  text-align: center;
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Mantém o conteúdo centralizado horizontalmente */
+}
+
+.feature-icon {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 5px;
+}
+
+.online-store{
+  padding-bottom: 20px;
+}
+
+.online-store a {
+  color: black;
+  text-align: center;
+}
+
+.online-store :hover{
+  color: #B38212;
+}
+
+h3 {
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin: 5px 0 5px 0;
+}
+
+p {
+  font-size: 0.8rem;
+  color: #555;
+  font-style: italic;
+  text-indent: 20px; /* Define o espaço da tabulação de parágrafo */
+  margin-bottom: 30px;
+}
+
+.feature p{
+  text-indent: 0;
+}
+
+.adress, .contact {
+  text-indent: 0;
+  text-align: left;
+}
+
+
+/* Contêiner dos Avaliações ------------------------------------------------------------------------------------------------------------------------------------------ */
+
+
+.review-title{
+  text-align: center;
+  background-color: #fff;
+  margin: 0;
+  padding: 5px;
+  border-top: 1px solid #3e3e3e;
+  font-size: 20px;
+}
+
+.review-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  position: relative; /* Garantir que a posição do contêiner seja controlada */
+  font-style: italic;
+
+}
+
+/* Campo de avaliação */
+.review-box {
+  font-size: 16px;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  height: 110px; /* Ajustado para acomodar as estrelas */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centraliza verticalmente */
+  align-items: center; /* Centraliza horizontalmente */
+  text-align: center;
+  line-height: 1;
+  overflow: hidden;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+/* Estilo para as estrelas de avaliação */
+.stars {
+  font-size: 20px;
+  margin-top: 10px;
+  color: #FFD700; /* Cor das estrelas */
+}
+
+
+/* Container Sobre Nós -----------------------------------------------------------------------------------------------------------------------------------*/
+
+
+#sobre,
+#footer {
+  background-color: #3e3d3d;
+  padding: 10px;
+}
+.container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 70%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #3e3d3d;
+}
+
+.image {
+  flex: 20%;
+  text-align: center;
+}
+
+.image img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.text {
+  flex: 80%;
+  padding-left: 20px;
+  color: #fff;
+}
+
+.text p{
+  color: #fff;
+  text-align: justify;
+  font-size: 16px;
+}
+
+/* Responsividade: Texto abaixo da imagem em telas menores */
+@media (max-width: 768px) {
+  .container {
+      flex-direction: column; /* Faz com que a imagem fique acima do texto */
+      text-align: center;
+  }
+
+  .image, .text {
+      flex: 100%;
+      padding-left: 0;
+  }
+
+  .image img {
+      width: 80%; /* Define um limite para a imagem */
+      max-width: 300px; /* Evita que fique muito grande */
+  }
+}
+
+
+/* Pagamentos e Certificados ------------------------------------------------------------------------------------------------------------------------------*/
+
+
+.container-payment {
+    max-width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    gap: 20px;
+    box-sizing: border-box;
+    background-color: #fff;
+}
+
+.coluna {
+    flex: 1;
+    min-width: 300px;
+}
+
+.titulo {
+    font-size: medium;
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #555;
+    text-align: center
+}
+
+.bandeiras, .certificados {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.bandeiras img, .certificados img {
+    width: 60px;
+    height: auto;
+}
+
+@media (max-width: 768px) {
+    .bandeiras {
+        justify-content: center;
+    }
+    .certificados {
+        justify-content: center;
+    }
+}
+
+.bg {
+    background:white;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.declaimer {
+    text-align: center;
+    font-size: 0.1rem;
+    color: #555;
+    padding: 10px;
+    background-color: #f9f9f9;
+}

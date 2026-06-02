@@ -1,0 +1,17 @@
+# Build artifacts (regenerados pelos scripts)
+FlashPDF/bundled/
+FlashPDF/dist/
+FlashPDF/installer/FlashPDF.exe
+FlashPDF/installer/FlashPDF_Portable.exe
+FlashPDF/installer/SumatraPDF-3.5.2-64-install.exe
+FlashPDF/installer/Output/
+FlashPDF/SumatraPDF-3.5.2-64-install.exe
+
+# Windows / editor
+Thumbs.db
+Desktop.ini
+.vs/
+.idea/
+*.user
+
+# release/*.exe fica versionado para download manual no GitHub

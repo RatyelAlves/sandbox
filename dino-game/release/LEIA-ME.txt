@@ -1,0 +1,18 @@
+Dino Game - Versao para Windows
+
+Como jogar:
+  1. De um duplo clique em dino.exe
+  2. Clique em JOGAR ou pressione Espaco
+
+Controles:
+  Espaco / Enter - Pular, iniciar ou reiniciar
+  Seta para baixo - Agachar
+  P - Pausar
+  M - Som on/off
+  F11 - Tela cheia
+  ESC - Menu
+
+Observacao:
+  O recorde e salvo em recorde.json nesta mesma pasta.
+
+Autor: Ratiel Alves de Souza - 5154038

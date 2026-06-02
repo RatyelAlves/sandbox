@@ -1,0 +1,14 @@
+{
+  "name": "notes-fullstack",
+  "private": true,
+  "scripts": {
+    "setup": "npm install --prefix server && npm install --prefix web && npm run db:migrate --prefix server",
+    "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix web\"",
+    "test": "npm run test --prefix server && npm run test --prefix web",
+    "build": "npm run build --prefix web"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "prettier": "^3.5.3"
+  }
+}

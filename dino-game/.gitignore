@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Executáveis e pacotes locais
+*.exe
+!release/dino.exe
+*.zip
+
+# PyInstaller (saída temporária)
+build/
+dist/
+
+# Dados gerados pelo jogo
+recorde.json
+
+# IDE / SO
+.vscode/
+.idea/
+*.swp
+Thumbs.db
+Desktop.ini
+
+# Cursor
+.cursor/

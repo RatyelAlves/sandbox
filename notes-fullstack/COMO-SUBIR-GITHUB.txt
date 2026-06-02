@@ -1,0 +1,107 @@
+COMO SUBIR O PROJETO NO GITHUB
+(Git ja configurado no PC)
+================================
+
+0. CONFERIR SE O GIT ESTA OK (opcional)
+---------------------------------------
+  git --version
+  git config user.name
+  git config user.email
+
+Se aparecer versao, nome e e-mail, pode seguir.
+
+
+1. CRIAR REPOSITORIO NO GITHUB
+------------------------------
+- Acesse: https://github.com/new
+- Escolha um nome (ex: notes-fullstack)
+- Public ou Private
+- NAO marque "Add a README" (voce ja tem um)
+- Clique em "Create repository"
+
+
+2. ABRIR A PASTA DO PROJETO
+---------------------------
+No PowerShell:
+
+  cd "F:\Documentos\Portifólio\notes-fullstack"
+
+
+3. CONFERIR O QUE VAI SUBIR
+---------------------------
+Estes arquivos NAO devem aparecer no git status (estao no .gitignore):
+  - node_modules/
+  - server\.env
+  - web\.env
+  - arquivos .db
+  - web\dist\
+
+
+4. PRIMEIRO ENVIO (fazer uma vez)
+---------------------------------
+  git init
+  git add .
+  git status
+  git commit -m "primeira versao do app de notas"
+  git branch -M main
+  git remote add origin https://github.com/RatyelAlves/notes-fullstack.git
+  git push -u origin main
+
+Exemplo:
+  git remote add origin https://github.com/RatyelAlves/notes-fullstack.git
+  git push -u origin main
+
+Revise o "git status" antes do commit.
+Se aparecer .env ou node_modules, NAO continue.
+
+
+5. LOGIN
+--------
+Como o Git ja esta configurado no PC, o push pode funcionar direto.
+
+Se pedir autenticacao:
+- HTTPS: use seu usuario do GitHub + Personal Access Token
+- Se voce usa SSH, troque o remote por:
+    git remote add origin git@github.com:RatyelAlves/notes-fullstack.git
+
+
+6. ATUALIZAR DEPOIS (quando mudar o codigo)
+-------------------------------------------
+  git add .
+  git commit -m "descreva o que alterou"
+  git push
+
+
+7. OPCIONAL — CRIAR REPO PELO TERMINAL (GitHub CLI)
+---------------------------------------------------
+Se voce usa "gh" e ja esta logado:
+
+  gh auth status
+  gh repo create NOME-DO-REPO --public --source=. --remote=origin --push
+
+
+DICAS
+-----
+- Nunca suba o arquivo .env
+- Pode subir .env.example
+- Commits simples em portugues:
+    "adiciona busca nas notas"
+    "corrige botao de apagar"
+
+
+PROBLEMAS COMUNS
+----------------
+
+Erro: "remote origin already exists"
+  git remote remove origin
+  git remote add origin https://github.com/RatyelAlves/notes-fullstack.git
+
+Erro: "failed to push"
+  git pull origin main --rebase
+  git push
+
+Clonou em outro PC e precisa rodar o projeto:
+  Copy-Item server\.env.example server\.env
+  Copy-Item web\.env.example web\.env
+  npm run setup
+  npm run dev

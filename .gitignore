@@ -1,0 +1,44 @@
+# Dependências
+node_modules/
+
+# Ambiente e segredos
+.env
+.env.local
+**/js/config.js
+
+# Build / cache
+dist/
+build/
+__pycache__/
+*.py[cod]
+*.db
+*.db-shm
+*.db-wal
+*.log
+
+# Python
+.venv/
+venv/
+env/
+*.egg-info/
+
+# Dino Game
+recorde.json
+
+# PrintPDF (artefatos regeneráveis)
+print-pdf/FlashPDF/bundled/
+print-pdf/FlashPDF/dist/
+print-pdf/FlashPDF/installer/FlashPDF.exe
+print-pdf/FlashPDF/installer/FlashPDF_Portable.exe
+print-pdf/FlashPDF/installer/SumatraPDF-3.5.2-64-install.exe
+print-pdf/FlashPDF/installer/Output/
+print-pdf/FlashPDF/SumatraPDF-3.5.2-64-install.exe
+
+# IDE / SO
+.vscode/
+.idea/
+.cursor/
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
