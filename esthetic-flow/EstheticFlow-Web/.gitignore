@@ -1,0 +1,18 @@
+# Dependências
+node_modules/
+
+# Build
+frontend/dist/
+
+# Segredos — NUNCA subir
+backend/.env
+backend/src/config/google-token.json
+*.env.local
+
+# Logs / SO
+*.log
+.DS_Store
+Thumbs.db
+
+# Uploads de mídia do chat
+backend/uploads/

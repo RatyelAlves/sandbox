@@ -1,0 +1,87 @@
+{
+  "name": "estheticflow-desktop",
+  "version": "1.0.0",
+  "description": "EstheticFlow — aplicativo desktop (Electron)",
+  "main": "electron/main.cjs",
+  "private": true,
+  "scripts": {
+    "dev": "node scripts/launch-dev.cjs",
+    "electron": "electron .",
+    "prepare:backend": "node scripts/prepare-backend.cjs",
+    "prepare:evolution": "node scripts/prepare-evolution.cjs",
+    "build:frontend": "npm run build --prefix ./frontend",
+    "pack": "npm run prepare:backend && npm run prepare:evolution && npm run build:frontend && electron-builder --dir",
+    "pack:zip": "npm run pack && node scripts/create-zip.cjs",
+    "dist": "npm run prepare:backend && npm run prepare:evolution && npm run build:frontend && electron-builder",
+    "dist:zip": "npm run pack:zip"
+  },
+  "build": {
+    "appId": "com.estheticflow.app",
+    "productName": "EstheticFlow",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "electron/**/*",
+      "scripts/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "./frontend/dist",
+        "to": "frontend/dist",
+        "filter": ["**/*"]
+      },
+      {
+        "from": "./backend",
+        "to": "backend",
+        "filter": [
+          "**/*",
+          "!uploads/**",
+          "!node_modules/.cache/**",
+          "!**/*.md",
+          "!**/*.map",
+          "!**/.git/**",
+          "!**/test/**",
+          "!**/tests/**"
+        ]
+      },
+      {
+        "from": "vendor/evolution-api",
+        "to": "evolution-api",
+        "filter": [
+          "dist/**",
+          "node_modules/**",
+          "package.json",
+          "prisma/**",
+          "!node_modules/**/.cache/**",
+          "!node_modules/**/@types/**",
+          "!node_modules/**/typescript/**",
+          "!node_modules/**/eslint/**",
+          "!node_modules/**/prettier/**",
+          "!node_modules/**/*.md"
+        ]
+      }
+    ],
+    "compression": "store",
+    "win": {
+      "target": ["nsis"],
+      "signAndEditExecutable": false
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "artifactName": "EstheticFlow-Setup-${version}.exe",
+      "deleteAppDataOnUninstall": false,
+      "runAfterFinish": true
+    }
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "electron": "^35.0.0",
+    "electron-builder": "^25.1.8",
+    "wait-on": "^8.0.1"
+  }
+}
