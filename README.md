@@ -5,9 +5,11 @@ Repositório com projetos de estudo e portfólio.
 | Pasta | Descrição |
 |-------|-----------|
 | [`dino-game/`](dino-game/) | Jogo do dinossauro (Python/Pygame) |
+| [`esthetic-flow/`](esthetic-flow/) | CRM para clínicas de estética — WhatsApp, agendamentos e IA ([Desktop](esthetic-flow/EstheticFlow-Desktop/) · [Web](esthetic-flow/EstheticFlow-Web/)) |
+| [`fabiano-valente-artes/`](fabiano-valente-artes/) | Site institucional |
+| [`meu-site/`](meu-site/) | Site de portfólio pessoal (HTML/CSS/JS) |
 | [`notes-fullstack/`](notes-fullstack/) | App de notas (React + Fastify) |
 | [`print-pdf/`](print-pdf/) | FlashPDF — impressão em lote de PDFs |
-| [`fabiano-valente-artes/`](fabiano-valente-artes/) | Site institucional |
 | [`rifa-online/`](rifa-online/) | Rifa online (Supabase) |
 
 Cada pasta tem seu próprio README com instruções de execução.
