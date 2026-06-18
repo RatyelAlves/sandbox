@@ -1,0 +1,172 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  USUARIO
+  TERREIRO
+}
+
+enum EventoStatus {
+  ATIVO
+  CANCELADO
+}
+
+enum CampanhaStatus {
+  ATIVA
+  ENCERRADA
+  RASCUNHO
+}
+
+enum CampanhaMetaTipo {
+  MONETARIA
+  ITENS
+}
+
+enum PropostaStatus {
+  PENDENTE
+  ACEITA
+  RECUSADA
+}
+
+model User {
+  id           String   @id
+  authId       String?  @unique
+  email        String   @unique
+  passwordHash String
+  role         UserRole
+  terreiroId   String?
+  terreiro     Terreiro? @relation(fields: [terreiroId], references: [id], onDelete: SetNull)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  favoritosTerreiros FavoritoTerreiro[]
+  favoritosEventos   FavoritoEvento[]
+}
+
+model Terreiro {
+  id                String   @id
+  nome              String
+  categoria         String
+  descricao         String
+  dataFundacao       String
+  liderReligioso    String
+  fundador          String
+  nacaoFundador     String
+  uf                String
+  cidade            String
+  bairro            String
+  rua               String
+  numero            String
+  horarioAbertura     String
+  horarioFechamento  String
+  giras             Json?
+  telefone           String   @default("")
+  email             String   @default("")
+  site              String?
+  instagram         String?
+  facebook          String?
+  whatsapp          String?
+  lat               Float
+  lng               Float
+  fotos             String[]
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  users              User[]
+  eventos            Evento[]
+  campanhas          Campanha[]         @relation("CampanhaOwner")
+  campanhasParceiro  Campanha[]         @relation("CampanhaPartner")
+  propostasEnviadas   PropostaCampanha[] @relation("PropostaFrom")
+  propostasRecebidas PropostaCampanha[] @relation("PropostaTo")
+  favoritos          FavoritoTerreiro[]
+}
+
+model Evento {
+  id           String       @id
+  terreiroId    String
+  terreiro     Terreiro     @relation(fields: [terreiroId], references: [id], onDelete: Cascade)
+  titulo        String
+  categoria     String
+  data          String
+  horario       String
+  local         String
+  descricao     String
+  linkIngresso  String?
+  status        EventoStatus @default(ATIVO)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  favoritos FavoritoEvento[]
+}
+
+model Campanha {
+  id                   String          @id
+  terreiroId            String
+  terreiro             Terreiro        @relation("CampanhaOwner", fields: [terreiroId], references: [id], onDelete: Cascade)
+  parceiroTerreiroId    String?
+  parceiroTerreiro      Terreiro?       @relation("CampanhaPartner", fields: [parceiroTerreiroId], references: [id], onDelete: SetNull)
+  titulo                String
+  descricao             String
+  dataInicio            String
+  dataFim               String
+  status                CampanhaStatus  @default(ATIVA)
+  metaTipo              CampanhaMetaTipo
+  metaArrecadacao       Float?
+  valorArrecadado        Float?
+  itemDescricao         String?
+  metaQuantidade        Int?
+  quantidadeArrecadada   Int?
+  unidade               String?
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+
+  propostas PropostaCampanha[]
+}
+
+model PropostaCampanha {
+  id                String         @id
+  deTerreiroId       String
+  deTerreiro        Terreiro       @relation("PropostaFrom", fields: [deTerreiroId], references: [id], onDelete: Cascade)
+  paraTerreiroId     String
+  paraTerreiro       Terreiro       @relation("PropostaTo", fields: [paraTerreiroId], references: [id], onDelete: Cascade)
+  titulo             String
+  descricao          String
+  metaTipo           CampanhaMetaTipo
+  dataInicio         String
+  dataFim            String
+  metaArrecadacao    Float?
+  itemDescricao      String?
+  metaQuantidade     Int?
+  unidade            String?
+  status             PropostaStatus  @default(PENDENTE)
+  campanhaId         String?        @unique
+  campanha           Campanha?       @relation(fields: [campanhaId], references: [id], onDelete: SetNull)
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+}
+
+model FavoritoTerreiro {
+  userId      String
+  terreiroId  String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  terreiro    Terreiro @relation(fields: [terreiroId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+
+  @@id([userId, terreiroId])
+}
+
+model FavoritoEvento {
+  userId    String
+  eventoId  String
+  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  evento    Evento @relation(fields: [eventoId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@id([userId, eventoId])
+}

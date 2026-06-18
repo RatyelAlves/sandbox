@@ -11,5 +11,6 @@ Repositório com projetos de estudo e portfólio.
 | [`notes-fullstack/`](notes-fullstack/) | App de notas (React + Fastify) |
 | [`print-pdf/`](print-pdf/) | FlashPDF — impressão em lote de PDFs |
 | [`rifa-online/`](rifa-online/) | Rifa online (Supabase) |
+| [`terreiro-map/`](terreiro-map/) | Plataforma para mapear e encontrar terreiros de Umbanda, Candomblé e tradições afro-brasileiras (Next.js + Supabase) |
 
 Cada pasta tem seu próprio README com instruções de execução.
