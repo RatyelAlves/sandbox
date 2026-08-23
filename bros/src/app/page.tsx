@@ -7,8 +7,8 @@ import {
 
 const PILLARS = [
   {
-    title: "Apelido, nunca nome",
-    body: "O perfil vive de um alias. Email e identidade civil não aparecem para ninguém.",
+    title: "Usuário, nunca nome",
+    body: "O perfil vive de um usuário. Email e identidade civil não aparecem para ninguém.",
   },
   {
     title: "Fotos sob o seu controle",
@@ -25,9 +25,21 @@ const PILLARS = [
 ];
 
 const STEPS = [
-  { n: "01", title: "Crie o alias", body: "Email, senha e um apelido. Sem rede social." },
-  { n: "02", title: "Escolha o ritmo", body: "Encontros, amizade ou sem pressa — na sua cidade." },
-  { n: "03", title: "Combine no chat", body: "Match libera a conversa. Fotos privadas continuam trancadas." },
+  {
+    n: "01",
+    title: "Crie o usuário",
+    body: "Email, senha e um nome de usuário. Sem rede social.",
+  },
+  {
+    n: "02",
+    title: "Encontre na cidade",
+    body: "Veja quem está na cidade que você escolheu. Sem GPS e sem mapa.",
+  },
+  {
+    n: "03",
+    title: "Abra o chat",
+    body: "Sem match. A conversa começa quando você quiser. Fotos privadas só quando você liberar.",
+  },
 ];
 
 export default function HomePage() {
@@ -55,9 +67,6 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/45 to-transparent" />
           <div className="relative z-10 mx-auto flex h-full max-w-6xl flex-col justify-end px-4 pb-16 pt-24 sm:justify-center sm:px-5 sm:pb-0">
             <div className="max-w-lg space-y-6">
-              <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-accent-hot">
-                18+ · Só entre homens
-              </p>
               <h1 className="font-display text-4xl leading-[0.95] text-ink sm:text-6xl lg:text-7xl">
                 Encontros
                 <br />

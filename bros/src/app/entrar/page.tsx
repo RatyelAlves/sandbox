@@ -48,11 +48,12 @@ export default function EntrarPage() {
 
   return (
     <AuthFrame>
-      <main className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-5 py-16">
-        <p className="text-[11px] uppercase tracking-[0.18em] text-accent">Acesso</p>
-        <h1 className="mt-2 font-display text-4xl text-ink">Entrar</h1>
-        <p className="mt-2 text-sm text-muted">
-          Só email e senha. Nenhuma rede social.
+      <main className="mx-auto flex w-full max-w-[400px] flex-1 flex-col justify-center px-6 py-12 sm:px-8">
+        <h1 className="text-[28px] font-bold tracking-tight text-ink">
+          Bem-vindo de volta
+        </h1>
+        <p className="mt-2 text-[14px] leading-relaxed text-muted">
+          Entre com email e senha. Sem rede social.
         </p>
 
         <form onSubmit={onSubmit} className="mt-8 space-y-4">
@@ -63,7 +64,8 @@ export default function EntrarPage() {
               type="email"
               required
               autoComplete="email"
-              className={inputClass}
+              placeholder="voce@email.com"
+              className={`${inputClass} rounded-lg`}
             />
           </Field>
           <Field label="Senha">
@@ -72,22 +74,30 @@ export default function EntrarPage() {
               type="password"
               required
               autoComplete="current-password"
-              className={inputClass}
+              placeholder="Sua senha"
+              className={`${inputClass} rounded-lg`}
             />
           </Field>
-          <p className="-mt-2 text-right text-sm">
-            <Link href="/esqueci-senha" className="text-accent hover:underline">
+          <div className="flex justify-end">
+            <Link
+              href="/esqueci-senha"
+              className="text-[13px] font-medium text-muted transition hover:text-ink"
+            >
               Esqueci a senha
             </Link>
-          </p>
-          <button type="submit" disabled={pending} className={`${buttonClass.primary} w-full`}>
+          </div>
+          <button
+            type="submit"
+            disabled={pending}
+            className={`${buttonClass.primary} w-full rounded-lg`}
+          >
             {pending ? "Entrando…" : "Entrar"}
           </button>
         </form>
 
-        <p className="mt-6 text-sm text-muted">
+        <p className="mt-8 border-t border-line pt-6 text-[14px] text-muted">
           Ainda não tem conta?{" "}
-          <Link href="/cadastro" className="text-accent hover:underline">
+          <Link href="/cadastro" className="font-medium text-accent hover:underline">
             Criar agora
           </Link>
         </p>

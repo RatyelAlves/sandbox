@@ -7,8 +7,8 @@
   --line: #2c2c2c;
   --ink: #ffffff;
   --muted: #999999;
-  --accent: #ffde00;
-  --accent-hot: #ffe94a;
+  --accent: #f8b018;
+  --accent-hot: #ffc533;
   --accent-ink: #000000;
   --danger: #ff3b30;
   --online: #4cd964;
@@ -28,6 +28,10 @@
   --color-online: var(--online);
   --font-sans: var(--font-inter);
   --font-display: var(--font-inter);
+  --leading-tight: 1.15;
+  --leading-snug: 1.25;
+  --leading-normal: 1.35;
+  --leading-relaxed: 1.4;
 }
 
 html,
@@ -39,6 +43,7 @@ body {
 
 body {
   font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  line-height: 1.35;
 }
 
 .font-display {
