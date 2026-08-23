@@ -1,0 +1,104 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #000000;
+  --bg-elevated: #1a1a1a;
+  --bg-soft: #222222;
+  --line: #2c2c2c;
+  --ink: #ffffff;
+  --muted: #999999;
+  --accent: #ffde00;
+  --accent-hot: #ffe94a;
+  --accent-ink: #000000;
+  --danger: #ff3b30;
+  --online: #4cd964;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-bg-soft: var(--bg-soft);
+  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-hot: var(--accent-hot);
+  --color-accent-ink: var(--accent-ink);
+  --color-danger: var(--danger);
+  --color-online: var(--online);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-inter);
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 40%, transparent);
+  color: #000;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #3a3a3a transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #3a3a3a;
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+html.no-print-active [data-protected-photo] {
+  visibility: hidden !important;
+}
+
+@media print {
+  [data-protected-photo] {
+    visibility: hidden !important;
+  }
+
+  body::after {
+    content: "Print e captura de tela não são permitidos no Bros.";
+    display: block;
+    padding: 2rem;
+    font-weight: 700;
+  }
+}

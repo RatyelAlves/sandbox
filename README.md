@@ -12,5 +12,6 @@ Repositório com projetos de estudo e portfólio.
 | [`print-pdf/`](print-pdf/) | FlashPDF — impressão em lote de PDFs |
 | [`rifa-online/`](rifa-online/) | Rifa online (Supabase) |
 | [`terreiro-map/`](terreiro-map/) | Plataforma para mapear e encontrar terreiros de Umbanda, Candomblé e tradições afro-brasileiras (Next.js + Supabase) |
+| [`bros/`](bros/) | Bros — encontros discretos entre homens (Next.js + Supabase) |
 
 Cada pasta tem seu próprio README com instruções de execução.
