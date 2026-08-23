@@ -12,6 +12,10 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Bros",
   description: "Encontros entre homens. Discrição de verdade.",
+  icons: {
+    icon: [{ url: "/icon.png", type: "image/png" }],
+    apple: "/apple-icon.png",
+  },
 };
 
 export default function RootLayout({
