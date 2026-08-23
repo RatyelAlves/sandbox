@@ -100,7 +100,7 @@ export default function DescobrirPage() {
         <p className="p-4 text-[13px] text-muted">Carregando…</p>
       ) : profiles.length === 0 ? (
         <p className="p-6 text-[13px] text-muted">
-          Ninguém por aqui ainda. Crie outro perfil de teste nessa cidade.
+          Ninguém por aqui ainda.
         </p>
       ) : (
         <div className="grid grid-cols-2 gap-0.5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
