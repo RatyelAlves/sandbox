@@ -13,6 +13,6 @@ Repositório com projetos de estudo e portfólio.
 | [`rifa-online/`](rifa-online/) | Rifa online (Supabase) |
 | [`terreiro-map/`](https://github.com/RatyelAlves/terreiro-map) | Plataforma para mapear e encontrar terreiros de Umbanda, Candomblé e tradições afro-brasileiras (Next.js + Supabase) · [repo público](https://github.com/RatyelAlves/terreiro-map) · [demo](https://terreiro-map.vercel.app) |
 | [`bros/`](bros/) | Bros — encontros discretos entre homens (Next.js + Supabase) |
-| [`XDown/`](XDown/) | App Android para baixar mídia de perfis públicos do X (Twitter) |
+| [`XDown/`](https://github.com/RatyelAlves/XDown) | App Android para baixar mídia de perfis públicos do X (Twitter) · [repo público](https://github.com/RatyelAlves/XDown) |
 
 Cada pasta tem seu próprio README com instruções de execução.
