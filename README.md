@@ -11,7 +11,7 @@ Repositório com projetos de estudo e portfólio.
 | [`notes-fullstack/`](notes-fullstack/) | App de notas (React + Fastify) |
 | [`print-pdf/`](print-pdf/) | FlashPDF — impressão em lote de PDFs |
 | [`rifa-online/`](rifa-online/) | Rifa online (Supabase) |
-| [`terreiro-map/`](terreiro-map/) | Plataforma para mapear e encontrar terreiros de Umbanda, Candomblé e tradições afro-brasileiras (Next.js + Supabase) |
+| [`terreiro-map/`](https://github.com/RatyelAlves/terreiro-map) | Plataforma para mapear e encontrar terreiros de Umbanda, Candomblé e tradições afro-brasileiras (Next.js + Supabase) · [repo público](https://github.com/RatyelAlves/terreiro-map) · [demo](https://terreiro-map.vercel.app) |
 | [`bros/`](bros/) | Bros — encontros discretos entre homens (Next.js + Supabase) |
 | [`XDown/`](XDown/) | App Android para baixar mídia de perfis públicos do X (Twitter) |
 
