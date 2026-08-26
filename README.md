@@ -13,5 +13,6 @@ Repositório com projetos de estudo e portfólio.
 | [`rifa-online/`](rifa-online/) | Rifa online (Supabase) |
 | [`terreiro-map/`](terreiro-map/) | Plataforma para mapear e encontrar terreiros de Umbanda, Candomblé e tradições afro-brasileiras (Next.js + Supabase) |
 | [`bros/`](bros/) | Bros — encontros discretos entre homens (Next.js + Supabase) |
+| [`XDown/`](XDown/) | App Android para baixar mídia de perfis públicos do X (Twitter) |
 
 Cada pasta tem seu próprio README com instruções de execução.
