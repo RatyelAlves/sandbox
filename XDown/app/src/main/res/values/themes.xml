@@ -1,7 +1,9 @@
 <resources>
     <style name="Theme.XDown" parent="android:Theme.Material.NoActionBar">
-        <item name="android:statusBarColor">@color/black</item>
-        <item name="android:navigationBarColor">@color/black</item>
-        <item name="android:windowBackground">@color/black</item>
+        <item name="android:statusBarColor">@color/x_bg</item>
+        <item name="android:navigationBarColor">@color/x_bg</item>
+        <item name="android:windowBackground">@color/x_bg</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
     </style>
 </resources>

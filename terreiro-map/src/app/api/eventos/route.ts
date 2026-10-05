@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { jsonError, requireTerreiro } from "@/lib/auth/require";
 import {
   createEvento,
   getEventoById,
@@ -6,7 +7,6 @@ import {
   setEventoStatus,
   updateEvento,
 } from "@/lib/db/eventos";
-import { LOGGED_TERREIRO_ID } from "@/lib/mock-data";
 import type { EventoFormInput } from "@/lib/eventos-store";
 
 export async function GET(request: Request) {
@@ -18,24 +18,29 @@ export async function GET(request: Request) {
     return NextResponse.json(await listEventos({ terreiroId, publicOnly }));
   } catch (error) {
     console.error("[GET /api/eventos]", error);
-    return NextResponse.json({ error: "Erro ao listar eventos." }, { status: 500 });
+    return jsonError("Erro ao listar eventos.", 500);
   }
 }
 
 export async function POST(request: Request) {
   try {
-    const body = (await request.json()) as EventoFormInput & { terreiroId?: string };
-    const terreiroId = body.terreiroId ?? LOGGED_TERREIRO_ID;
-    const created = await createEvento(terreiroId, body);
+    const auth = await requireTerreiro();
+    if (!auth.ok) return auth.response;
+
+    const body = (await request.json()) as EventoFormInput;
+    const created = await createEvento(auth.profile.terreiroId, body);
     return NextResponse.json(created, { status: 201 });
   } catch (error) {
     console.error("[POST /api/eventos]", error);
-    return NextResponse.json({ error: "Erro ao criar evento." }, { status: 500 });
+    return jsonError("Erro ao criar evento.", 500);
   }
 }
 
 export async function PATCH(request: Request) {
   try {
+    const auth = await requireTerreiro();
+    if (!auth.ok) return auth.response;
+
     const body = (await request.json()) as {
       id?: string;
       action?: "cancelar" | "reativar" | "update";
@@ -43,7 +48,12 @@ export async function PATCH(request: Request) {
     };
 
     if (!body.id) {
-      return NextResponse.json({ error: "ID obrigatório." }, { status: 400 });
+      return jsonError("ID obrigatório.", 400);
+    }
+
+    const existing = await getEventoById(body.id);
+    if (!existing || existing.terreiroId !== auth.profile.terreiroId) {
+      return jsonError("Acesso negado.", 403);
     }
 
     if (body.action === "cancelar") {
@@ -55,16 +65,12 @@ export async function PATCH(request: Request) {
     }
 
     if (body.action === "update" && body.input) {
-      const existing = await getEventoById(body.id);
-      if (!existing) {
-        return NextResponse.json({ error: "Evento não encontrado." }, { status: 404 });
-      }
       return NextResponse.json(await updateEvento(body.id, body.input));
     }
 
-    return NextResponse.json({ error: "Ação inválida." }, { status: 400 });
+    return jsonError("Ação inválida.", 400);
   } catch (error) {
     console.error("[PATCH /api/eventos]", error);
-    return NextResponse.json({ error: "Erro ao atualizar evento." }, { status: 500 });
+    return jsonError("Erro ao atualizar evento.", 500);
   }
 }

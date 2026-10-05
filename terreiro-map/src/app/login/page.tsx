@@ -12,6 +12,8 @@ import { ProjectCredits } from "@/components/ui/ProjectCredits";
 import { useAuth } from "@/lib/auth-context";
 import { TEST_ACCOUNTS } from "@/lib/test-accounts";
 
+const SHOW_TEST_ACCOUNTS = process.env.NODE_ENV !== "production";
+
 export default function LoginPage() {
   const router = useRouter();
   const { login } = useAuth();
@@ -92,28 +94,30 @@ export default function LoginPage() {
             <FormActions submitLabel={submitting ? "Entrando..." : "Entrar"} />
           </FormShell>
 
-          <div className="mt-6 rounded-2xl bg-input-surface-warm/70 px-4 py-3 ring-1 ring-[color:var(--input-border)]">
-            <p className="text-center text-xs font-bold uppercase tracking-wide text-text-brown/55">
-              Acessos de teste
-            </p>
-            <div className="mt-3 space-y-2">
-              {TEST_ACCOUNTS.map((account) => (
-                <button
-                  key={account.email}
-                  type="button"
-                  onClick={() => fillTestAccount(account.email, account.password)}
-                  className="flex w-full items-center justify-between rounded-xl bg-input-surface px-3 py-2.5 text-left text-sm transition-colors hover:bg-[#f3e2cc] active:scale-[0.99]"
-                >
-                  <span className="font-semibold text-text-brown">
-                    {account.label}
-                  </span>
-                  <span className="text-xs text-text-brown/60">
-                    {account.email} · {account.password}
-                  </span>
-                </button>
-              ))}
+          {SHOW_TEST_ACCOUNTS ? (
+            <div className="mt-6 rounded-2xl bg-input-surface-warm/70 px-4 py-3 ring-1 ring-[color:var(--input-border)]">
+              <p className="text-center text-xs font-bold uppercase tracking-wide text-text-brown/55">
+                Acessos de teste
+              </p>
+              <div className="mt-3 space-y-2">
+                {TEST_ACCOUNTS.map((account) => (
+                  <button
+                    key={account.email}
+                    type="button"
+                    onClick={() => fillTestAccount(account.email, account.password)}
+                    className="flex w-full items-center justify-between rounded-xl bg-input-surface px-3 py-2.5 text-left text-sm transition-colors hover:bg-[#f3e2cc] active:scale-[0.99]"
+                  >
+                    <span className="font-semibold text-text-brown">
+                      {account.label}
+                    </span>
+                    <span className="text-xs text-text-brown/60">
+                      {account.email} · {account.password}
+                    </span>
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          ) : null}
 
           <button
             type="button"

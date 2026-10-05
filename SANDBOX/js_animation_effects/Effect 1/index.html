@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>CSS & JavaScript Animation Effects</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<section>
+		<h2>JS Animation</h2>
+		<div class="banner">
+			<div class="blocks"></div>
+		</div>
+	</section>
+	<script>
+		const banner = documet.getElementsByClassName('banner')[0]; //Uncaught ReferenceError: document is not defined...
+		const blocks = documet.getElementsByClassName('blocks');
+
+		for (var i = 1; i < 400; i++){
+			banner.innerHTML += "<div class='blocks'></div>";
+			blocks[i].style.animationDelay = `${i * 0.05}s`;
+		}
+	</script>
+</body>
+</html>

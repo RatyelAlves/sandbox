@@ -26,8 +26,10 @@ pygame.init()
 pygame.mixer.init()
 
 LARGURA = 900
-ALTURA = 400
+ALTURA = LARGURA * 3 // 4
 FPS = 60
+ALTURA_CHAO = 50
+Y_CHAO = ALTURA - ALTURA_CHAO
 
 tela = pygame.Surface((LARGURA, ALTURA))
 janela = pygame.display.set_mode((LARGURA, ALTURA), pygame.RESIZABLE)
@@ -40,10 +42,12 @@ pygame.display.set_caption("Dino Game")
 
 # ================================ IMAGENS ================================
 
-background_img = pygame.transform.scale(
-    pygame.image.load(os.path.join(ASSETS, "background.png")),
-    (LARGURA, ALTURA),
-)
+fundo_original = pygame.image.load(os.path.join(ASSETS, "background.png"))
+escala_fundo = LARGURA / fundo_original.get_width()
+fundo_altura = round(fundo_original.get_height() * escala_fundo)
+background_img = pygame.transform.scale(fundo_original, (LARGURA, fundo_altura))
+FUNDO_Y = ALTURA - fundo_altura
+CEU = background_img.get_at((0, 0))[:3]
 
 dino_img = pygame.transform.scale(
     pygame.image.load(os.path.join(ASSETS, "dino.png")), (60, 60)
@@ -94,7 +98,7 @@ clock = pygame.time.Clock()
 
 # ================================ CHÃO (pré-renderizado) ================================
 
-chao_surface = pygame.Surface((LARGURA, ALTURA - 350))
+chao_surface = pygame.Surface((LARGURA, ALTURA_CHAO))
 chao_surface.fill(CHAO)
 for i in range(0, LARGURA, 20):
     altura_linha = random.randint(5, 15)
@@ -102,7 +106,7 @@ for i in range(0, LARGURA, 20):
 
 # ================================ ESTADO DO JOGO ================================
 
-DINO_Y_CHAO = 300
+DINO_Y_CHAO = Y_CHAO - 50
 DINO_TAMANHO = (60, 60)
 DINO_AGACHADO = (60, 35)
 
@@ -115,7 +119,7 @@ agachado = False
 obstaculos = []
 velocidade = 6
 
-nuvens = [[random.randint(0, LARGURA), random.randint(50, 150)] for _ in range(3)]
+nuvens = [[random.randint(0, LARGURA), random.randint(70, 320)] for _ in range(4)]
 pedras = []
 particulas = []
 pontos = 0
@@ -151,17 +155,17 @@ def criar_obstaculo():
     if tipo == "small":
         return {
             "tipo": "small",
-            "rect": pygame.Rect(LARGURA, 310, 30, 40),
+            "rect": pygame.Rect(LARGURA, Y_CHAO - 40, 30, 40),
             "img": cactus_small_img,
         }
     if tipo == "big":
         return {
             "tipo": "big",
-            "rect": pygame.Rect(LARGURA, 290, 40, 60),
+            "rect": pygame.Rect(LARGURA, Y_CHAO - 60, 40, 60),
             "img": cactus_big_img,
         }
 
-    y_base = random.choice([250, 270])
+    y_base = random.choice([Y_CHAO - 100, Y_CHAO - 80])
     return {
         "tipo": "bird",
         "rect": pygame.Rect(LARGURA, y_base, 50, 30),
@@ -332,9 +336,10 @@ def desenhar_controles_menu(painel):
     tela.blit(render_tela, (painel.centerx - render_tela.get_width() // 2, painel.bottom - 28))
 
 
-def desenhar_fundo_simples():
-    tela.blit(background_img, (0, 0))
-    tela.blit(chao_surface, (0, 350))
+def desenhar_fundo():
+    tela.fill(CEU)
+    tela.blit(background_img, (0, FUNDO_Y))
+    tela.blit(chao_surface, (0, Y_CHAO))
 
 
 def desenhar_overlay(titulo, linhas, cor_titulo=PRETO):
@@ -384,12 +389,10 @@ def alternar_som():
 
 
 def desenhar_cenario():
-    tela.blit(background_img, (0, 0))
+    desenhar_fundo()
 
     for nuvem in nuvens:
         tela.blit(cloud_img, (nuvem[0], nuvem[1]))
-
-    tela.blit(chao_surface, (0, 350))
 
     for pedra in pedras:
         pygame.draw.circle(tela, (90, 90, 90), pedra, 3)
@@ -403,7 +406,7 @@ def desenhar_dino():
     sombra = pygame.Surface((largura_sombra, 15), pygame.SRCALPHA)
     pygame.draw.ellipse(sombra, (0, 0, 0, alpha), (0, 0, largura_sombra, 15))
     pos_x = dino.x + (60 - largura_sombra) // 2
-    tela.blit(sombra, (pos_x, 350))
+    tela.blit(sombra, (pos_x, Y_CHAO))
 
     if agachado and not pulando:
         sprite_y = DINO_Y_CHAO + (DINO_TAMANHO[1] - DINO_AGACHADO[1])
@@ -474,7 +477,7 @@ def atualizar_particulas(pousou):
             particulas.append(
                 [
                     dino.x + 30,
-                    350,
+                    Y_CHAO,
                     random.randint(-3, 3),
                     random.randint(-5, -1),
                     random.randint(3, 6),
@@ -519,7 +522,7 @@ def atualizar_cenario():
     global pontos, velocidade, recorde
 
     if random.randint(0, 20) == 0:
-        pedras.append([LARGURA, random.randint(360, 390)])
+        pedras.append([LARGURA, random.randint(Y_CHAO + 10, Y_CHAO + 40)])
 
     for pedra in pedras:
         pedra[0] -= velocidade
@@ -529,7 +532,7 @@ def atualizar_cenario():
         nuvem[0] -= 2
         if nuvem[0] < -80:
             nuvem[0] = LARGURA
-            nuvem[1] = random.randint(50, 150)
+            nuvem[1] = random.randint(70, 320)
 
     pontos += 1
     if pontos % 200 == 0:
@@ -568,7 +571,7 @@ def voltar_menu():
 
 
 def desenhar_menu():
-    desenhar_fundo_simples()
+    desenhar_fundo()
 
     painel = desenhar_painel(LARGURA // 2, ALTURA // 2, 500, 360)
     texto_centralizado("DINO GAME", fonte_titulo, painel.y + 24)

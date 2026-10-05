@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { jsonError, requireTerreiro } from "@/lib/auth/require";
 import {
   createCampanhaFromForm,
   getCampanhaById,
@@ -6,7 +7,6 @@ import {
   setCampanhaStatus,
   updateCampanhaFromForm,
 } from "@/lib/db/campanhas";
-import { LOGGED_TERREIRO_ID } from "@/lib/mock-data";
 import type { CampanhaFormInput } from "@/lib/campanhas-store";
 import { parseDateBRToISO } from "@/lib/masks";
 
@@ -23,36 +23,40 @@ export async function GET(request: Request) {
     return NextResponse.json(await listCampanhas({ terreiroId }));
   } catch (error) {
     console.error("[GET /api/campanhas]", error);
-    return NextResponse.json({ error: "Erro ao listar campanhas." }, { status: 500 });
+    return jsonError("Erro ao listar campanhas.", 500);
   }
 }
 
 export async function POST(request: Request) {
   try {
+    const auth = await requireTerreiro();
+    if (!auth.ok) return auth.response;
+
     const body = (await request.json()) as CampanhaFormInput & {
       parceiroTerreiroId?: string;
-      terreiroId?: string;
     };
 
-    const terreiroId = body.terreiroId ?? LOGGED_TERREIRO_ID;
     const input = {
       ...body,
       dataFim: normalizeDataFim(body.dataFim, new Date().toISOString().slice(0, 10)),
     };
 
-    const created = await createCampanhaFromForm(terreiroId, input, {
+    const created = await createCampanhaFromForm(auth.profile.terreiroId, input, {
       parceiroTerreiroId: body.parceiroTerreiroId,
     });
 
     return NextResponse.json(created, { status: 201 });
   } catch (error) {
     console.error("[POST /api/campanhas]", error);
-    return NextResponse.json({ error: "Erro ao criar campanha." }, { status: 500 });
+    return jsonError("Erro ao criar campanha.", 500);
   }
 }
 
 export async function PATCH(request: Request) {
   try {
+    const auth = await requireTerreiro();
+    if (!auth.ok) return auth.response;
+
     const body = (await request.json()) as {
       id?: string;
       action?: "encerrar" | "reativar" | "update";
@@ -60,7 +64,12 @@ export async function PATCH(request: Request) {
     };
 
     if (!body.id) {
-      return NextResponse.json({ error: "ID obrigatório." }, { status: 400 });
+      return jsonError("ID obrigatório.", 400);
+    }
+
+    const existing = await getCampanhaById(body.id);
+    if (!existing || existing.terreiroId !== auth.profile.terreiroId) {
+      return jsonError("Acesso negado.", 403);
     }
 
     if (body.action === "encerrar") {
@@ -72,11 +81,6 @@ export async function PATCH(request: Request) {
     }
 
     if (body.action === "update" && body.input) {
-      const existing = await getCampanhaById(body.id);
-      if (!existing) {
-        return NextResponse.json({ error: "Campanha não encontrada." }, { status: 404 });
-      }
-
       const input = {
         ...body.input,
         dataFim: normalizeDataFim(body.input.dataFim, existing.dataFim),
@@ -87,9 +91,9 @@ export async function PATCH(request: Request) {
       );
     }
 
-    return NextResponse.json({ error: "Ação inválida." }, { status: 400 });
+    return jsonError("Ação inválida.", 400);
   } catch (error) {
     console.error("[PATCH /api/campanhas]", error);
-    return NextResponse.json({ error: "Erro ao atualizar campanha." }, { status: 500 });
+    return jsonError("Erro ao atualizar campanha.", 500);
   }
 }

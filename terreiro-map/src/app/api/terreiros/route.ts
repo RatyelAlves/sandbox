@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { jsonError, requireTerreiro } from "@/lib/auth/require";
 import { getTerreiroById, listTerreiros, updateTerreiroProfile } from "@/lib/db/terreiros";
 
 export async function GET() {
@@ -6,12 +7,15 @@ export async function GET() {
     return NextResponse.json(await listTerreiros());
   } catch (error) {
     console.error("[GET /api/terreiros]", error);
-    return NextResponse.json({ error: "Erro ao listar terreiros." }, { status: 500 });
+    return jsonError("Erro ao listar terreiros.", 500);
   }
 }
 
 export async function PATCH(request: Request) {
   try {
+    const auth = await requireTerreiro();
+    if (!auth.ok) return auth.response;
+
     const body = (await request.json()) as {
       id?: string;
       horarioAbertura?: string;
@@ -19,16 +23,16 @@ export async function PATCH(request: Request) {
       giras?: unknown;
     };
 
-    if (!body.id) {
-      return NextResponse.json({ error: "ID obrigatório." }, { status: 400 });
+    if (body.id && body.id !== auth.profile.terreiroId) {
+      return jsonError("Acesso negado.", 403);
     }
 
-    const existing = await getTerreiroById(body.id);
+    const existing = await getTerreiroById(auth.profile.terreiroId);
     if (!existing) {
-      return NextResponse.json({ error: "Terreiro não encontrado." }, { status: 404 });
+      return jsonError("Terreiro não encontrado.", 404);
     }
 
-    const updated = await updateTerreiroProfile(body.id, {
+    const updated = await updateTerreiroProfile(auth.profile.terreiroId, {
       horarioAbertura: body.horarioAbertura ?? existing.horarioAbertura,
       horarioFechamento: body.horarioFechamento ?? existing.horarioFechamento,
       giras: body.giras ?? existing.giras,
@@ -37,6 +41,6 @@ export async function PATCH(request: Request) {
     return NextResponse.json(updated);
   } catch (error) {
     console.error("[PATCH /api/terreiros]", error);
-    return NextResponse.json({ error: "Erro ao atualizar terreiro." }, { status: 500 });
+    return jsonError("Erro ao atualizar terreiro.", 500);
   }
 }

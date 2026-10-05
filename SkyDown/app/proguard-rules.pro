@@ -1,0 +1,8 @@
+-keepattributes *Annotation*, InnerClasses, Signature, Exception, RuntimeVisibleAnnotations, AnnotationDefault
+-keep class kotlinx.serialization.** { *; }
+-keepclassmembers class kotlinx.serialization.json.** { *** Companion; }
+-dontwarn kotlinx.serialization.**
+-dontwarn okhttp3.**
+-dontwarn okio.**
+-dontwarn retrofit2.**
+-keep class com.skydown.app.data.** { *; }

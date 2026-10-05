@@ -3,8 +3,16 @@ import type { CampanhaFormInput } from "@/lib/campanhas-store";
 import { createCampanhaFromProposta } from "@/lib/db/campanhas";
 import { prisma } from "@/lib/prisma";
 
-export async function listPropostas() {
+export async function listPropostas(filters?: { terreiroId?: string }) {
   const rows = await prisma.propostaCampanha.findMany({
+    where: filters?.terreiroId
+      ? {
+          OR: [
+            { deTerreiroId: filters.terreiroId },
+            { paraTerreiroId: filters.terreiroId },
+          ],
+        }
+      : undefined,
     orderBy: { createdAt: "desc" },
   });
   return rows.map(mapProposta);

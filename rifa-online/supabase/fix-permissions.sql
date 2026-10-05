@@ -26,7 +26,9 @@ $$;
 GRANT USAGE ON SCHEMA public TO anon, authenticated;
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.cotas TO authenticated;
-GRANT SELECT ON TABLE public.cotas TO anon;
+REVOKE SELECT ON TABLE public.cotas FROM anon;
+GRANT SELECT (cota, numero1, numero2, numero3, identificador, status, pagamento)
+  ON TABLE public.cotas TO anon;
 GRANT SELECT ON TABLE public.cotas_public TO anon, authenticated;
 
 ALTER TABLE public.cotas ENABLE ROW LEVEL SECURITY;
@@ -34,10 +36,19 @@ ALTER TABLE public.cotas ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS cotas_admin_all ON public.cotas;
 CREATE POLICY cotas_admin_all ON public.cotas
   FOR ALL TO authenticated
-  USING (true)
-  WITH CHECK (true);
+  USING ((SELECT auth.uid()) IS NOT NULL)
+  WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
+
+DROP POLICY IF EXISTS cotas_public_select ON public.cotas;
+CREATE POLICY cotas_public_select ON public.cotas
+  FOR SELECT TO anon
+  USING (true);
 
 GRANT EXECUTE ON FUNCTION public.reservar_cota(TEXT, TEXT, TEXT) TO anon, authenticated;
+REVOKE EXECUTE ON FUNCTION public.confirmar_pagamento(TEXT) FROM PUBLIC, anon;
+REVOKE EXECUTE ON FUNCTION public.admin_reset_all() FROM PUBLIC, anon;
+REVOKE EXECUTE ON FUNCTION public.admin_bulk_status(TEXT[], TEXT) FROM PUBLIC, anon;
+REVOKE EXECUTE ON FUNCTION public.admin_list_cotas() FROM PUBLIC, anon;
 GRANT EXECUTE ON FUNCTION public.confirmar_pagamento(TEXT) TO authenticated;
 GRANT EXECUTE ON FUNCTION public.admin_reset_all() TO authenticated;
 GRANT EXECUTE ON FUNCTION public.admin_bulk_status(TEXT[], TEXT) TO authenticated;

@@ -11,13 +11,16 @@ import okhttp3.Request
 class MediaStoreDownloader(
     context: Context,
     private val client: OkHttpClient,
-) {
+) : MediaDownloader {
     private val appContext = context.applicationContext
+    override val destinationHint: String = "Pictures/XDown ou Movies/XDown"
 
-    suspend fun download(item: MediaItem) = withContext(Dispatchers.IO) {
+    override suspend fun download(item: MediaItem) {
+        withContext(Dispatchers.IO) {
         val request = Request.Builder()
             .url(item.downloadUrl)
             .header("User-Agent", NetworkModule.USER_AGENT)
+            .header("Referer", "https://x.com/")
             .build()
         client.newCall(request).execute().use { response ->
             if (!response.isSuccessful) {
@@ -52,6 +55,7 @@ class MediaStoreDownloader(
             } catch (error: Exception) {
                 resolver.delete(uri, null, null)
                 throw error
+            }
             }
         }
     }

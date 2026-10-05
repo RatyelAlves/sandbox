@@ -112,6 +112,7 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --font-display: "Fraunces", Georgia, serif;
 }
 
 @layer base {
@@ -119,6 +120,69 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
+    min-height: 100vh;
+    background-color: #7ec8e3;
+  }
+
+  body::before,
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  body::before {
+    z-index: 0;
+    background-image: url('/landscape-sunset.jpg');
+    background-size: cover;
+    background-position: center top;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+  }
+
+  body::after {
+    z-index: 1;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.22),
+      rgba(255, 255, 255, 0.1)
+    );
+    backdrop-filter: blur(6px) saturate(1.2);
+    -webkit-backdrop-filter: blur(6px) saturate(1.2);
+  }
+
+  .dark body {
+    background-color: #0b1730;
+  }
+
+  .dark body::before {
+    background-image: url('/landscape-sunset-dark.jpg');
+  }
+
+  .dark body::after {
+    background: linear-gradient(
+      180deg,
+      rgba(8, 14, 32, 0.34),
+      rgba(8, 14, 32, 0.16)
+    );
+  }
+
+  #root {
+    position: relative;
+    z-index: 2;
+  }
+
+  .create-note-fab {
+    right: max(1.75rem, env(safe-area-inset-right));
+    bottom: max(1.75rem, env(safe-area-inset-bottom));
+  }
+
+  @media (min-width: 768px) {
+    .create-note-fab {
+      right: 1.25rem;
+      bottom: 1.25rem;
+    }
   }
 }

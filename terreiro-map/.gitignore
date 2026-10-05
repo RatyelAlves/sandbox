@@ -45,3 +45,6 @@ next-env.d.ts
 
 /src/generated/prisma
 
+# Material de disciplina (não faz parte do app)
+/Atividade Extensionista II/
+

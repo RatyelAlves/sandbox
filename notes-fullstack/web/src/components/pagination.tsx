@@ -26,7 +26,7 @@ export function Pagination({ page, totalPages, onPageChange }: PaginationProps) 
         Anterior
       </Button>
 
-      <span className='text-sm text-zinc-600 dark:text-zinc-400'>
+      <span className='rounded-full bg-white/80 px-3 py-1 text-sm text-zinc-700 backdrop-blur-sm dark:bg-zinc-900/70 dark:text-zinc-200'>
         Página {page} de {totalPages}
       </span>
 

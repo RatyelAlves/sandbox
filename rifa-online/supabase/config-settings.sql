@@ -38,8 +38,8 @@ CREATE POLICY rifa_config_public_read ON rifa_config
 DROP POLICY IF EXISTS rifa_config_admin_update ON rifa_config;
 CREATE POLICY rifa_config_admin_update ON rifa_config
   FOR UPDATE TO authenticated
-  USING (true)
-  WITH CHECK (true);
+  USING ((SELECT auth.uid()) IS NOT NULL)
+  WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
 
 GRANT SELECT ON TABLE public.rifa_config TO anon, authenticated;
 GRANT UPDATE ON TABLE public.rifa_config TO authenticated;

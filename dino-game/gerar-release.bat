@@ -1,7 +1,7 @@
 @echo off
 setlocal
 
-cd /d "%~dp0.."
+cd /d "%~dp0"
 set "PYTHON=%LOCALAPPDATA%\Programs\Python\Python312\python.exe"
 
 if not exist "%PYTHON%" (
@@ -11,7 +11,7 @@ if not exist "%PYTHON%" (
 
 echo Gerando executavel...
 "%PYTHON%" -m pip install pyinstaller --quiet
-pyinstaller --clean --noconfirm dino.spec
+"%PYTHON%" -m PyInstaller --clean --noconfirm dino.spec
 if errorlevel 1 exit /b 1
 
 if not exist "release" mkdir "release"

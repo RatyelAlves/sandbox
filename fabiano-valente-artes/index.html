@@ -40,7 +40,7 @@
     <link rel="preload" as="image" href="img/banner.webp" type="image/webp">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bona+Nova+SC:ital@1&family=Manrope&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bona+Nova+SC:ital@1&family=Manrope:wght@400;600;700&display=swap">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 
     <script type="application/ld+json">
@@ -107,29 +107,50 @@
 </head>
 
 <body>
+    <div id="page-scroll" aria-hidden="true"></div>
     <a class="skip-link" href="#conteudo-principal">Ir para o conteúdo</a>
 
     <header id="header">
         <a href="#banner" class="logo" aria-label="Fabiano Valente Artes & Molduras - início">
             <picture>
                 <source srcset="img/logo.webp" type="image/webp">
-                <img src="img/logo.png" alt="Fabiano Valente Artes & Molduras - logo da loja" width="200" height="80" fetchpriority="high" decoding="async">
+                <img src="img/logo.png" alt="Fabiano Valente Artes & Molduras - logo da loja" width="80" height="80" fetchpriority="high" decoding="async">
             </picture>
         </a>
+        <nav aria-label="Seções da página">
+            <a href="#servicos_produtos">Produtos</a>
+            <a href="#colecoes">Coleções</a>
+            <a href="#avaliacoes">Avaliações</a>
+            <a href="#sobre">Contato</a>
+        </nav>
     </header>
 
     <main id="conteudo-principal">
         <section id="banner" aria-label="Apresentação">
-            <h1 class="banner-text">Fabiano Valente Artes & Molduras</h1>
+            <div class="banner-content">
+                <h1 class="banner-text">Fabiano Valente Artes &amp; Molduras</h1>
+                <p class="banner-lead">Molduras, quadros e antiguidades em Belo Horizonte há mais de 40 anos.</p>
+            </div>
         </section>
 
         <a href="https://wa.me/5531988730079" id="whatsapp-button" target="_blank" rel="noopener noreferrer" aria-label="Fale conosco pelo WhatsApp">
             <i class="fab fa-whatsapp" aria-hidden="true"></i>
         </a>
 
-        <a href="https://maps.app.goo.gl/RCg17BME5rHbjjk69" class="redirect-div" target="_blank" rel="noopener noreferrer" aria-label="Ver localização da loja no Google Maps">
-            <span class="overlay-text">Encontre-nos Aqui</span>
-        </a>
+        <div class="map-block">
+            <iframe
+                class="map-frame"
+                title="Mapa da loja Fabiano Valente na Rua Cláudio Manoel, 713, Funcionários, Belo Horizonte"
+                src="https://maps.google.com/maps?q=Rua%20Claudio%20Manoel%2C%20713%2C%20Funcionarios%2C%20Belo%20Horizonte%20-%20MG&amp;hl=pt-BR&amp;z=16&amp;output=embed"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                allowfullscreen>
+            </iframe>
+            <a class="map-caption" href="https://maps.app.goo.gl/RCg17BME5rHbjjk69" target="_blank" rel="noopener noreferrer">
+                Rua Cláudio Manoel, 713 — Funcionários · Seg a sex 9h–18h, sáb 9h–14h
+                <span>Como chegar</span>
+            </a>
+        </div>
 
         <section id="servicos_produtos" class="servicos_produtos" aria-labelledby="titulo-produtos">
             <div class="products_title">
@@ -224,74 +245,74 @@
             </ul>
         </section>
 
-        <section class="carousel" aria-labelledby="titulo-colecoes">
+        <section id="colecoes" class="carousel" aria-labelledby="titulo-colecoes">
             <h2 id="titulo-colecoes">Transforme sua casa com artes exclusivas!</h2>
             <div class="swiper mySwiper" aria-label="Galeria de coleções de quadros decorativos">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide"><picture>
+                    <div class="swiper-slide"><figure class="collection-card"><picture>
                     <source srcset="img/abstrato.webp" type="image/webp">
-                    <img src="img/abstrato.jpg" alt="Coleção de quadros decorativos abstratos" loading="lazy" width="130" height="130" decoding="async">
-                </picture></div>
-                    <div class="swiper-slide"><picture>
+                    <img src="img/abstrato.jpg" alt="Coleção de quadros decorativos abstratos" loading="lazy" width="180" height="240" decoding="async">
+                </picture><figcaption>Abstrato</figcaption></figure></div>
+                    <div class="swiper-slide"><figure class="collection-card"><picture>
                     <source srcset="img/animais.webp" type="image/webp">
-                    <img src="img/animais.jpg" alt="Coleção de quadros com temática de animais" loading="lazy" width="130" height="130" decoding="async">
-                </picture></div>
-                    <div class="swiper-slide"><picture>
+                    <img src="img/animais.jpg" alt="Coleção de quadros com temática de animais" loading="lazy" width="180" height="240" decoding="async">
+                </picture><figcaption>Animais</figcaption></figure></div>
+                    <div class="swiper-slide"><figure class="collection-card"><picture>
                     <source srcset="img/Bebidas.webp" type="image/webp">
-                    <img src="img/Bebidas.jpg" alt="Coleção de quadros decorativos com tema de bebidas" loading="lazy" width="130" height="130" decoding="async">
-                </picture></div>
-                    <div class="swiper-slide"><picture>
+                    <img src="img/Bebidas.jpg" alt="Coleção de quadros decorativos com tema de bebidas" loading="lazy" width="180" height="240" decoding="async">
+                </picture><figcaption>Bebidas</figcaption></figure></div>
+                    <div class="swiper-slide"><figure class="collection-card"><picture>
                     <source srcset="img/café.webp" type="image/webp">
-                    <img src="img/café.jpg" alt="Coleção de quadros decorativos para cozinha e café" loading="lazy" width="130" height="130" decoding="async">
-                </picture></div>
-                    <div class="swiper-slide"><picture>
+                    <img src="img/café.jpg" alt="Coleção de quadros decorativos para cozinha e café" loading="lazy" width="180" height="240" decoding="async">
+                </picture><figcaption>Café</figcaption></figure></div>
+                    <div class="swiper-slide"><figure class="collection-card"><picture>
                     <source srcset="img/carros.webp" type="image/webp">
-                    <img src="img/carros.jpg" alt="Coleção de quadros com temática automotiva" loading="lazy" width="130" height="130" decoding="async">
-                </picture></div>
-                    <div class="swiper-slide"><picture>
+                    <img src="img/carros.jpg" alt="Coleção de quadros com temática automotiva" loading="lazy" width="180" height="240" decoding="async">
+                </picture><figcaption>Carros</figcaption></figure></div>
+                    <div class="swiper-slide"><figure class="collection-card"><picture>
                     <source srcset="img/cidades.webp" type="image/webp">
-                    <img src="img/cidades.jpg" alt="Coleção de quadros com paisagens urbanas e cidades" loading="lazy" width="130" height="130" decoding="async">
-                </picture></div>
-                    <div class="swiper-slide"><picture>
+                    <img src="img/cidades.jpg" alt="Coleção de quadros com paisagens urbanas e cidades" loading="lazy" width="180" height="240" decoding="async">
+                </picture><figcaption>Cidades</figcaption></figure></div>
+                    <div class="swiper-slide"><figure class="collection-card"><picture>
                     <source srcset="img/Cozinha.webp" type="image/webp">
-                    <img src="img/Cozinha.jpg" alt="Coleção de quadros decorativos para cozinha" loading="lazy" width="130" height="130" decoding="async">
-                </picture></div>
-                    <div class="swiper-slide"><picture>
+                    <img src="img/Cozinha.jpg" alt="Coleção de quadros decorativos para cozinha" loading="lazy" width="180" height="240" decoding="async">
+                </picture><figcaption>Cozinha</figcaption></figure></div>
+                    <div class="swiper-slide"><figure class="collection-card"><picture>
                     <source srcset="img/flores.webp" type="image/webp">
-                    <img src="img/flores.jpg" alt="Coleção de quadros com flores e botânica" loading="lazy" width="130" height="130" decoding="async">
-                </picture></div>
-                    <div class="swiper-slide"><picture>
+                    <img src="img/flores.jpg" alt="Coleção de quadros com flores e botânica" loading="lazy" width="180" height="240" decoding="async">
+                </picture><figcaption>Flores</figcaption></figure></div>
+                    <div class="swiper-slide"><figure class="collection-card"><picture>
                     <source srcset="img/fotografia.webp" type="image/webp">
-                    <img src="img/fotografia.jpg" alt="Coleção de quadros com fotografias artísticas" loading="lazy" width="130" height="130" decoding="async">
-                </picture></div>
-                    <div class="swiper-slide"><picture>
+                    <img src="img/fotografia.jpg" alt="Coleção de quadros com fotografias artísticas" loading="lazy" width="180" height="240" decoding="async">
+                </picture><figcaption>Fotografia</figcaption></figure></div>
+                    <div class="swiper-slide"><figure class="collection-card"><picture>
                     <source srcset="img/frases.webp" type="image/webp">
-                    <img src="img/frases.jpg" alt="Coleção de quadros decorativos com frases inspiradoras" loading="lazy" width="130" height="130" decoding="async">
-                </picture></div>
-                    <div class="swiper-slide"><picture>
+                    <img src="img/frases.jpg" alt="Coleção de quadros decorativos com frases inspiradoras" loading="lazy" width="180" height="240" decoding="async">
+                </picture><figcaption>Frases</figcaption></figure></div>
+                    <div class="swiper-slide"><figure class="collection-card"><picture>
                     <source srcset="img/minimalista.webp" type="image/webp">
-                    <img src="img/minimalista.jpg" alt="Coleção de quadros decorativos minimalistas" loading="lazy" width="130" height="130" decoding="async">
-                </picture></div>
-                    <div class="swiper-slide"><picture>
+                    <img src="img/minimalista.jpg" alt="Coleção de quadros decorativos minimalistas" loading="lazy" width="180" height="240" decoding="async">
+                </picture><figcaption>Minimalista</figcaption></figure></div>
+                    <div class="swiper-slide"><figure class="collection-card"><picture>
                     <source srcset="img/paisagem.webp" type="image/webp">
-                    <img src="img/paisagem.jpg" alt="Coleção de quadros com paisagens naturais" loading="lazy" width="130" height="130" decoding="async">
-                </picture></div>
-                    <div class="swiper-slide"><picture>
+                    <img src="img/paisagem.jpg" alt="Coleção de quadros com paisagens naturais" loading="lazy" width="180" height="240" decoding="async">
+                </picture><figcaption>Paisagem</figcaption></figure></div>
+                    <div class="swiper-slide"><figure class="collection-card"><picture>
                     <source srcset="img/pintura-aquarela.webp" type="image/webp">
-                    <img src="img/pintura-aquarela.jpg" alt="Coleção de quadros com pinturas em aquarela" loading="lazy" width="130" height="130" decoding="async">
-                </picture></div>
-                    <div class="swiper-slide"><picture>
+                    <img src="img/pintura-aquarela.jpg" alt="Coleção de quadros com pinturas em aquarela" loading="lazy" width="180" height="240" decoding="async">
+                </picture><figcaption>Aquarela</figcaption></figure></div>
+                    <div class="swiper-slide"><figure class="collection-card"><picture>
                     <source srcset="img/plantas.webp" type="image/webp">
-                    <img src="img/plantas.jpg" alt="Coleção de quadros decorativos com plantas" loading="lazy" width="130" height="130" decoding="async">
-                </picture></div>
-                    <div class="swiper-slide"><picture>
+                    <img src="img/plantas.jpg" alt="Coleção de quadros decorativos com plantas" loading="lazy" width="180" height="240" decoding="async">
+                </picture><figcaption>Plantas</figcaption></figure></div>
+                    <div class="swiper-slide"><figure class="collection-card"><picture>
                     <source srcset="img/praia.webp" type="image/webp">
-                    <img src="img/praia.jpg" alt="Coleção de quadros com temática de praia e mar" loading="lazy" width="130" height="130" decoding="async">
-                </picture></div>
-                    <div class="swiper-slide"><picture>
+                    <img src="img/praia.jpg" alt="Coleção de quadros com temática de praia e mar" loading="lazy" width="180" height="240" decoding="async">
+                </picture><figcaption>Praia</figcaption></figure></div>
+                    <div class="swiper-slide"><figure class="collection-card"><picture>
                     <source srcset="img/religioso.webp" type="image/webp">
-                    <img src="img/religioso.jpg" alt="Coleção de quadros com temática religiosa" loading="lazy" width="130" height="130" decoding="async">
-                </picture></div>
+                    <img src="img/religioso.jpg" alt="Coleção de quadros com temática religiosa" loading="lazy" width="180" height="240" decoding="async">
+                </picture><figcaption>Religioso</figcaption></figure></div>
                 </div>
             </div>
 
@@ -322,7 +343,7 @@
             </div>
         </section>
 
-        <section class="avaliacoes" aria-labelledby="titulo-avaliacoes">
+        <section id="avaliacoes" class="avaliacoes" aria-labelledby="titulo-avaliacoes">
             <div class="review-title">
                 <h2 id="titulo-avaliacoes">Avaliações de Clientes</h2>
             </div>
@@ -445,34 +466,22 @@
         </div>
     </footer>
 
-    <script>
-        document.addEventListener("scroll", () => {
-            const header = document.getElementById("header");
-            if (window.scrollY > 50) {
-                header.classList.add("scrolled");
-            } else {
-                header.classList.remove("scrolled");
-            }
-        });
-    </script>
-
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
     <script defer>
         document.addEventListener("DOMContentLoaded", () => {
             new Swiper(".mySwiper", {
-                slidesPerView: 8,
-                spaceBetween: 10,
+                slidesPerView: 5,
+                spaceBetween: 16,
                 loop: true,
-                loopedSlides: 16,
+                loopedSlides: 10,
                 autoplay: {
                     delay: 2000,
                     disableOnInteraction: false,
                 },
                 breakpoints: {
-                    320: { slidesPerView: 3 },
-                    480: { slidesPerView: 5 },
-                    768: { slidesPerView: 6 },
-                    1024: { slidesPerView: 8 }
+                    320: { slidesPerView: 3, spaceBetween: 10 },
+                    768: { slidesPerView: 3, spaceBetween: 12 },
+                    1024: { slidesPerView: 5 }
                 }
             });
 
@@ -496,6 +505,66 @@
 
             showReview(currentReview);
             setInterval(nextReview, 3000);
+
+            const pageScroll = document.getElementById("page-scroll");
+            let scrollDrag = null;
+
+            function scrollMetrics() {
+                const doc = document.documentElement;
+                const header = document.getElementById("header");
+                const offset = header ? header.getBoundingClientRect().height : 0;
+                const view = doc.clientHeight;
+                const lane = Math.max(0, view - offset);
+                const scrollable = doc.scrollHeight - view;
+                const thumb = Math.max(48, Math.min(lane, (view / doc.scrollHeight) * lane));
+                const travel = Math.max(1, lane - thumb);
+                return { doc, offset, thumb, travel, scrollable };
+            }
+
+            function updateHeaderShade() {
+                const header = document.getElementById("header");
+                document.documentElement.style.setProperty("--header-offset", header.offsetHeight + "px");
+                const shade = Math.min(window.scrollY / 220, 1);
+                header.style.backgroundColor = "rgba(30, 28, 26, " + (shade * 0.94).toFixed(3) + ")";
+            }
+
+            function updatePageScroll() {
+                updateHeaderShade();
+                const { doc, offset, thumb, travel, scrollable } = scrollMetrics();
+                if (scrollable <= 0) {
+                    pageScroll.hidden = true;
+                    return;
+                }
+                pageScroll.hidden = false;
+                const top = offset + (doc.scrollTop / scrollable) * travel;
+                pageScroll.style.height = thumb + "px";
+                pageScroll.style.transform = "translateY(" + top + "px)";
+            }
+
+            document.addEventListener("scroll", updatePageScroll, { passive: true });
+            window.addEventListener("resize", updatePageScroll);
+            updatePageScroll();
+
+            pageScroll.addEventListener("pointerdown", (event) => {
+                scrollDrag = {
+                    y: event.clientY,
+                    scrollTop: document.documentElement.scrollTop
+                };
+                pageScroll.setPointerCapture(event.pointerId);
+                pageScroll.style.cursor = "grabbing";
+            });
+
+            pageScroll.addEventListener("pointermove", (event) => {
+                if (!scrollDrag) return;
+                const { doc, travel, scrollable } = scrollMetrics();
+                const delta = ((event.clientY - scrollDrag.y) / travel) * scrollable;
+                doc.scrollTop = scrollDrag.scrollTop + delta;
+            });
+
+            pageScroll.addEventListener("pointerup", () => {
+                scrollDrag = null;
+                pageScroll.style.cursor = "grab";
+            });
         });
     </script>
 </body>

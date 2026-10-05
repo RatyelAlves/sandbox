@@ -2,6 +2,10 @@
 
 Plataforma para mapear e encontrar terreiros de Umbanda, Candomblé e tradições afro-brasileiras.
 
+[![Demo](https://img.shields.io/badge/demo-terreiro--map.vercel.app-0ea5e9)](https://terreiro-map.vercel.app)
+
+**Demo:** [terreiro-map.vercel.app](https://terreiro-map.vercel.app)
+
 ## Telas implementadas
 
 ### Autenticação

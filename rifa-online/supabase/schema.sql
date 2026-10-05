@@ -19,8 +19,10 @@ CREATE TABLE IF NOT EXISTS cotas (
 CREATE INDEX IF NOT EXISTS idx_cotas_status ON cotas (status);
 CREATE INDEX IF NOT EXISTS idx_cotas_identificador ON cotas (identificador);
 
--- View pública (sem nome nem WhatsApp)
-CREATE OR REPLACE VIEW cotas_public AS
+-- View pública (sem nome nem WhatsApp) — security_invoker respeita RLS do caller
+CREATE OR REPLACE VIEW cotas_public
+WITH (security_invoker = on)
+AS
 SELECT cota, numero1, numero2, numero3, identificador, status, pagamento
 FROM cotas;
 
@@ -44,6 +46,7 @@ END $$;
 CREATE OR REPLACE FUNCTION gerar_identificador()
 RETURNS TEXT
 LANGUAGE plpgsql
+SET search_path = public
 AS $$
 DECLARE
   chars TEXT := 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
@@ -263,13 +266,27 @@ ALTER TABLE cotas ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS cotas_admin_all ON cotas;
 CREATE POLICY cotas_admin_all ON cotas
   FOR ALL TO authenticated
-  USING (true)
-  WITH CHECK (true);
+  USING ((SELECT auth.uid()) IS NOT NULL)
+  WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
+
+-- Leitura pública só das colunas expostas (sem comprador/whatsapp)
+DROP POLICY IF EXISTS cotas_public_select ON cotas;
+CREATE POLICY cotas_public_select ON cotas
+  FOR SELECT TO anon
+  USING (true);
 
 GRANT USAGE ON SCHEMA public TO anon, authenticated;
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.cotas TO authenticated;
-GRANT SELECT ON TABLE public.cotas TO anon;
+REVOKE SELECT ON TABLE public.cotas FROM anon;
+GRANT SELECT (cota, numero1, numero2, numero3, identificador, status, pagamento)
+  ON TABLE public.cotas TO anon;
 GRANT SELECT ON TABLE public.cotas_public TO anon, authenticated;
+REVOKE EXECUTE ON FUNCTION public.gerar_identificador() FROM PUBLIC, anon, authenticated;
+REVOKE EXECUTE ON FUNCTION public.reservar_cota(TEXT, TEXT, TEXT) FROM PUBLIC;
+REVOKE EXECUTE ON FUNCTION public.confirmar_pagamento(TEXT) FROM PUBLIC, anon;
+REVOKE EXECUTE ON FUNCTION public.admin_reset_all() FROM PUBLIC, anon;
+REVOKE EXECUTE ON FUNCTION public.admin_bulk_status(TEXT[], TEXT) FROM PUBLIC, anon;
+REVOKE EXECUTE ON FUNCTION public.admin_list_cotas() FROM PUBLIC, anon;
 GRANT EXECUTE ON FUNCTION reservar_cota(TEXT, TEXT, TEXT) TO anon, authenticated;
 GRANT EXECUTE ON FUNCTION confirmar_pagamento(TEXT) TO authenticated;
 GRANT EXECUTE ON FUNCTION admin_reset_all() TO authenticated;
@@ -302,7 +319,9 @@ CREATE POLICY rifa_config_public_read ON rifa_config
 
 DROP POLICY IF EXISTS rifa_config_admin_update ON rifa_config;
 CREATE POLICY rifa_config_admin_update ON rifa_config
-  FOR UPDATE TO authenticated USING (true) WITH CHECK (true);
+  FOR UPDATE TO authenticated
+  USING ((SELECT auth.uid()) IS NOT NULL)
+  WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
 
 GRANT SELECT ON TABLE public.rifa_config TO anon, authenticated;
 GRANT UPDATE ON TABLE public.rifa_config TO authenticated;

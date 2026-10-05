@@ -55,6 +55,7 @@ import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import androidx.media3.ui.PlayerView
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import coil.request.videoFrameMillis
 import com.xdown.app.data.MediaKind
 import com.xdown.app.data.NetworkModule
 import com.xdown.app.ui.theme.Hairline
@@ -106,7 +107,7 @@ fun MediaPreview(
             if (item.kind == MediaKind.PHOTO) {
                 FullscreenPhoto(item)
             } else {
-                FullscreenVideo(url = item.downloadUrl, previewUrl = item.previewUrl, play = active)
+                FullscreenVideo(item = item, play = active)
             }
         }
 
@@ -280,19 +281,39 @@ private fun FullscreenPhoto(item: XMedia) {
 }
 
 @Composable
-private fun FullscreenVideo(url: String, previewUrl: String, play: Boolean) {
+private fun FullscreenVideo(item: XMedia, play: Boolean) {
+    val url = item.downloadUrl
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        val context = LocalContext.current
+        val poster = item.imagePreviewUrl()?.let { image ->
+            ImageRequest.Builder(context)
+                .data(image)
+                .crossfade(true)
+                .addHeader("User-Agent", NetworkModule.USER_AGENT)
+                .addHeader("Referer", "https://x.com/")
+                .build()
+        } ?: ImageRequest.Builder(context)
+            .data(url)
+            .videoFrameMillis(750)
+            .crossfade(true)
+            .addHeader("User-Agent", NetworkModule.USER_AGENT)
+            .addHeader("Referer", "https://x.com/")
+            .build()
         AsyncImage(
-            model = previewUrl,
+            model = poster,
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Fit,
         )
         if (play) {
-            val context = LocalContext.current
             val player = remember(url) {
+                val headers = mapOf(
+                    "User-Agent" to NetworkModule.USER_AGENT,
+                    "Referer" to "https://x.com/",
+                )
                 val http = DefaultHttpDataSource.Factory()
                     .setUserAgent(NetworkModule.USER_AGENT)
+                    .setDefaultRequestProperties(headers)
                 ExoPlayer.Builder(context)
                     .setMediaSourceFactory(DefaultMediaSourceFactory(http))
                     .build()

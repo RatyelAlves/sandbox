@@ -29,35 +29,24 @@ export function App() {
   } = useNotes()
 
   return (
-    <div className='min-h-screen bg-zinc-50 text-zinc-900 transition-colors dark:bg-zinc-900 dark:text-zinc-100'>
-      <div className='mx-auto w-full max-w-5xl px-4 pb-10'>
+    <div className='min-h-screen text-zinc-900 transition-colors dark:text-zinc-100'>
+      <div className='mx-auto w-full max-w-5xl pb-[max(7rem,calc(env(safe-area-inset-bottom)+6rem))] pl-[max(1.75rem,env(safe-area-inset-left))] pr-[max(1.75rem,env(safe-area-inset-right))] pt-[max(0.75rem,env(safe-area-inset-top))] md:px-4 md:pt-0 md:pb-24'>
         <Header
           total={total}
           page={page}
           totalPages={totalPages}
           theme={theme}
           onToggleTheme={toggleTheme}
-          onCreateNote={() => setCreateOpen(true)}
         />
 
         <div className='mt-8 space-y-6'>
           <SearchBar value={searchInput} onChange={setSearchInput} />
 
           <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
-            <CreateNoteForm
-              open={createOpen}
-              onOpenChange={setCreateOpen}
-              onCreateNote={createNote}
-              isCreating={isCreating}
-            />
-
             {isLoading ? (
               <SkeletonGrid />
             ) : notes.length === 0 ? (
-              <EmptyState
-                onCreateNote={() => setCreateOpen(true)}
-                hasSearch={Boolean(searchInput.trim())}
-              />
+              <EmptyState hasSearch={Boolean(searchInput.trim())} />
             ) : (
               notes.map((note) => (
                 <NoteCard
@@ -73,6 +62,13 @@ export function App() {
           <Pagination page={page} totalPages={totalPages} onPageChange={setPage} />
         </div>
       </div>
+
+      <CreateNoteForm
+        open={createOpen}
+        onOpenChange={setCreateOpen}
+        onCreateNote={createNote}
+        isCreating={isCreating}
+      />
     </div>
   )
 }

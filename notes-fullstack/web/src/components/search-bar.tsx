@@ -9,13 +9,13 @@ interface SearchBarProps {
 export function SearchBar({ value, onChange }: SearchBarProps) {
   return (
     <div className='relative'>
-      <Search className='absolute left-3 top-1/2 size-4 -translate-y-1/2 text-zinc-500' />
+      <Search className='absolute left-3 top-1/2 size-4 -translate-y-1/2 text-lime-600 dark:text-indigo-300' />
       <Input
         value={value}
         onChange={(event) => onChange(event.target.value)}
         placeholder='Buscar por título ou conteúdo...'
         aria-label='Buscar notas'
-        className='bg-white border-zinc-300 text-zinc-900 pl-10 pr-10 dark:bg-zinc-800 dark:border-zinc-700 dark:text-zinc-100'
+        className='h-11 rounded-2xl border-white/60 bg-white/75 pl-10 pr-10 text-zinc-900 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-zinc-900/70 dark:text-zinc-100'
       />
       {value && (
         <button

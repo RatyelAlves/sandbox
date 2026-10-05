@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getAuthProfile } from "@/lib/auth/server";
+import { jsonError } from "@/lib/auth/require";
 import { listCampanhas } from "@/lib/db/campanhas";
 import { listEventos } from "@/lib/db/eventos";
 import { listFavoriteEventoIds, listFavoriteTerreiroIds } from "@/lib/db/favoritos";
@@ -10,12 +11,16 @@ export async function GET() {
   try {
     const profile = await getAuthProfile();
 
-    const [terreiros, eventos, campanhas, propostas] = await Promise.all([
+    const [terreiros, eventos, campanhas] = await Promise.all([
       listTerreiros(),
       listEventos(),
       listCampanhas(),
-      listPropostas(),
     ]);
+
+    const propostas =
+      profile?.accountType === "terreiro" && profile.terreiroId
+        ? await listPropostas({ terreiroId: profile.terreiroId })
+        : [];
 
     const favoritos = {
       usuario:
@@ -37,9 +42,6 @@ export async function GET() {
     });
   } catch (error) {
     console.error("[GET /api/bootstrap]", error);
-    return NextResponse.json(
-      { error: "Falha ao carregar dados do banco." },
-      { status: 500 },
-    );
+    return jsonError("Falha ao carregar dados do banco.", 500);
   }
 }

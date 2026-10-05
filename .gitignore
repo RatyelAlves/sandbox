@@ -1,14 +1,23 @@
+# Site novo — já vive em RatyelAlves/cotraxdev-portfolio
+RatyelAlves/
+_cotraxdev-portfolio-deploy/
+
 # Dependências
 node_modules/
 
 # Ambiente e segredos
 .env
 .env.local
+.env.*
 **/js/config.js
 
 # Build / cache
 dist/
 build/
+out/
+.next/
+.turbo/
+coverage/
 __pycache__/
 *.py[cod]
 *.db
@@ -21,6 +30,15 @@ __pycache__/
 venv/
 env/
 *.egg-info/
+
+# Android / mobile
+*.apk
+*.aab
+*.ap_
+.gradle/
+local.properties
+**/build/
+**/.cxx/
 
 # Dino Game
 recorde.json
@@ -42,3 +60,12 @@ print-pdf/FlashPDF/SumatraPDF-3.5.2-64-install.exe
 Thumbs.db
 Desktop.ini
 *.swp
+
+# Instaladores / releases (acima do limite do GitHub)
+**/release/
+**/*-Setup-*.exe
+**/*.msi
+
+# Pastas temporarias locais
+esthetic-flow/_sandbox_check/
+esthetic-flow/sandbox-push/

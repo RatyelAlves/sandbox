@@ -1,13 +1,14 @@
 import { NextResponse } from "next/server";
+import { jsonError, requireTerreiro } from "@/lib/auth/require";
 import {
   aceitarProposta,
   createProposta,
   listPropostas,
   recusarProposta,
 } from "@/lib/db/propostas";
-import { LOGGED_TERREIRO_ID } from "@/lib/mock-data";
 import type { CampanhaFormInput } from "@/lib/campanhas-store";
 import { parseDateBRToISO } from "@/lib/masks";
+import { prisma } from "@/lib/prisma";
 
 function normalizeDataFim(dataFim: string) {
   if (!dataFim.trim()) {
@@ -21,48 +22,67 @@ function normalizeDataFim(dataFim: string) {
 
 export async function GET() {
   try {
-    return NextResponse.json(await listPropostas());
+    const auth = await requireTerreiro();
+    if (!auth.ok) return auth.response;
+    return NextResponse.json(
+      await listPropostas({ terreiroId: auth.profile.terreiroId }),
+    );
   } catch (error) {
     console.error("[GET /api/propostas]", error);
-    return NextResponse.json({ error: "Erro ao listar propostas." }, { status: 500 });
+    return jsonError("Erro ao listar propostas.", 500);
   }
 }
 
 export async function POST(request: Request) {
   try {
+    const auth = await requireTerreiro();
+    if (!auth.ok) return auth.response;
+
     const body = (await request.json()) as CampanhaFormInput & {
       paraTerreiroId?: string;
-      deTerreiroId?: string;
       action?: "aceitar" | "recusar" | "create";
       propostaId?: string;
     };
 
     if (body.action === "aceitar" && body.propostaId) {
+      const proposta = await prisma.propostaCampanha.findUnique({
+        where: { id: body.propostaId },
+      });
+      if (!proposta || proposta.paraTerreiroId !== auth.profile.terreiroId) {
+        return jsonError("Acesso negado.", 403);
+      }
       const result = await aceitarProposta(body.propostaId);
       if (!result) {
-        return NextResponse.json({ error: "Proposta inválida." }, { status: 400 });
+        return jsonError("Proposta inválida.", 400);
       }
       return NextResponse.json(result);
     }
 
     if (body.action === "recusar" && body.propostaId) {
+      const proposta = await prisma.propostaCampanha.findUnique({
+        where: { id: body.propostaId },
+      });
+      if (!proposta || proposta.paraTerreiroId !== auth.profile.terreiroId) {
+        return jsonError("Acesso negado.", 403);
+      }
       const result = await recusarProposta(body.propostaId);
       if (!result) {
-        return NextResponse.json({ error: "Proposta inválida." }, { status: 400 });
+        return jsonError("Proposta inválida.", 400);
       }
       return NextResponse.json(result);
     }
 
     if (!body.paraTerreiroId) {
-      return NextResponse.json(
-        { error: "Terreiro destino obrigatório." },
-        { status: 400 },
-      );
+      return jsonError("Terreiro destino obrigatório.", 400);
+    }
+
+    if (body.paraTerreiroId === auth.profile.terreiroId) {
+      return jsonError("Não é possível propor para o próprio terreiro.", 400);
     }
 
     const dataFim = normalizeDataFim(body.dataFim);
     const created = await createProposta(
-      body.deTerreiroId ?? LOGGED_TERREIRO_ID,
+      auth.profile.terreiroId,
       body.paraTerreiroId,
       {
         ...body,
@@ -74,6 +94,6 @@ export async function POST(request: Request) {
     return NextResponse.json(created, { status: 201 });
   } catch (error) {
     console.error("[POST /api/propostas]", error);
-    return NextResponse.json({ error: "Erro ao processar proposta." }, { status: 500 });
+    return jsonError("Erro ao processar proposta.", 500);
   }
 }

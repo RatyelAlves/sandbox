@@ -1,5 +1,4 @@
-import { PenLineIcon, Plus } from 'lucide-react'
-import { Button } from './ui/button'
+import { PenLineIcon } from 'lucide-react'
 import { ThemeToggle } from './theme-toggle'
 
 interface HeaderProps {
@@ -8,7 +7,6 @@ interface HeaderProps {
   totalPages: number
   theme: 'light' | 'dark'
   onToggleTheme: () => void
-  onCreateNote: () => void
 }
 
 export function Header({
@@ -17,34 +15,23 @@ export function Header({
   totalPages,
   theme,
   onToggleTheme,
-  onCreateNote,
 }: HeaderProps) {
   const notesLabel = total === 1 ? '1 nota' : `${total} notas`
 
   return (
-    <header className='py-4 w-full border-b border-zinc-200 dark:border-zinc-700/50'>
-      <div className='flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between'>
-        <div className='flex items-center gap-3'>
-          <PenLineIcon className='size-6 text-lime-500' />
-          <div>
-            <h1 className='text-xl font-semibold text-zinc-900 dark:text-zinc-100'>Notes</h1>
-            <p className='text-sm text-zinc-600 dark:text-zinc-400'>
-              {notesLabel} · Página {page} de {totalPages}
-            </p>
-          </div>
+    <header className='font-display relative mt-4 w-full rounded-2xl border border-white/60 bg-white/75 px-4 py-4 pr-16 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-zinc-900/70'>
+      <div className='flex items-center gap-3'>
+        <PenLineIcon className='size-6 text-lime-600 dark:text-indigo-300' />
+        <div>
+          <h1 className='text-xl font-semibold text-zinc-900 dark:text-zinc-100'>Notes</h1>
+          <p className='text-sm text-zinc-600 dark:text-zinc-400'>
+            {notesLabel} · Página {page} de {totalPages}
+          </p>
         </div>
+      </div>
 
-        <div className='flex items-center gap-2'>
-          <ThemeToggle theme={theme} onToggle={onToggleTheme} />
-          <Button
-            type='button'
-            onClick={onCreateNote}
-            className='bg-lime-500 text-zinc-900 hover:bg-lime-400 font-medium'
-          >
-            <Plus className='size-4' />
-            Nova nota
-          </Button>
-        </div>
+      <div className='absolute top-1/2 right-3 -translate-y-1/2'>
+        <ThemeToggle theme={theme} onToggle={onToggleTheme} />
       </div>
     </header>
   )

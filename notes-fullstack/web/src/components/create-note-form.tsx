@@ -12,7 +12,6 @@ interface CreateNoteFormProps {
   onOpenChange: (open: boolean) => void
   onCreateNote: (input: CreateNoteInput) => Promise<void>
   isCreating: boolean
-  showCardTrigger?: boolean
 }
 
 export function CreateNoteForm({
@@ -20,7 +19,6 @@ export function CreateNoteForm({
   onOpenChange,
   onCreateNote,
   isCreating,
-  showCardTrigger = true,
 }: CreateNoteFormProps) {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
@@ -44,16 +42,12 @@ export function CreateNoteForm({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      {showCardTrigger && (
-        <DialogTrigger className='group flex min-h-[140px] w-full flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-zinc-300 bg-zinc-50 p-4 transition-all hover:border-lime-400 hover:bg-lime-50 dark:border-zinc-600 dark:bg-zinc-800/50 dark:hover:border-lime-400 dark:hover:bg-zinc-800'>
-          <div className='rounded-full bg-lime-500/10 p-3 transition-transform group-hover:scale-110'>
-            <Plus className='size-6 text-lime-500' />
-          </div>
-          <span className='text-sm font-medium text-zinc-600 dark:text-zinc-300'>
-            Criar nova nota
-          </span>
-        </DialogTrigger>
-      )}
+      <DialogTrigger
+        aria-label='Criar nova nota'
+        className='create-note-fab fixed z-40 flex size-14 items-center justify-center rounded-full bg-lime-500 text-zinc-900 shadow-lg transition-colors hover:scale-105 hover:bg-lime-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lime-300 active:scale-95 dark:bg-indigo-400 dark:text-white dark:hover:bg-indigo-300 dark:focus-visible:ring-indigo-300'
+      >
+        <Plus className='size-7' />
+      </DialogTrigger>
 
       <DialogContent className='border-zinc-200 bg-white text-zinc-900 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100'>
         <DialogHeader>Crie sua nota</DialogHeader>
@@ -87,7 +81,7 @@ export function CreateNoteForm({
 
           <Button
             disabled={isCreating || !content.trim()}
-            className='w-full bg-lime-500 font-medium text-zinc-900 hover:bg-lime-400'
+            className='w-full bg-lime-500 font-medium text-zinc-900 hover:bg-lime-400 dark:bg-indigo-400 dark:text-white dark:hover:bg-indigo-300'
           >
             {isCreating ? (
               <>

@@ -1,7 +1,6 @@
 import { Loader2, Pencil, Trash2 } from 'lucide-react'
 import { useState } from 'react'
 import { formatNoteDate } from '../lib/format-date'
-import { getNoteBorderColor } from '../lib/note-colors'
 import type { Note, UpdateNoteInput } from '../types/note'
 import { EditNoteForm } from './edit-note-form'
 import {
@@ -34,8 +33,6 @@ export function NoteCard({ note, onUpdateNote, onDeleteNote }: NoteCardProps) {
   const [isDeleting, setIsDeleting] = useState(false)
   const [touchStartX, setTouchStartX] = useState<number | null>(null)
   const [swipeOffset, setSwipeOffset] = useState(0)
-
-  const borderColor = getNoteBorderColor(note.id)
 
   function resetDialog() {
     setIsEditing(false)
@@ -112,7 +109,7 @@ export function NoteCard({ note, onUpdateNote, onDeleteNote }: NoteCardProps) {
         >
           <DialogTrigger
             onClick={() => setIsEditing(false)}
-            className={`flex min-h-[140px] w-full flex-col items-start gap-3 rounded-2xl border border-l-4 bg-white p-4 pr-14 text-left shadow-sm transition-all hover:scale-[1.02] hover:shadow-md active:scale-[0.98] dark:bg-zinc-800 ${borderColor} border-zinc-200 dark:border-zinc-700`}
+            className='flex w-full flex-col items-start rounded-2xl border border-l-4 border-white/60 border-l-lime-500 bg-white/75 px-4 py-3 pr-12 text-left shadow-sm backdrop-blur-md transition-all hover:scale-[1.02] hover:shadow-md active:scale-[0.98] md:min-h-[140px] md:gap-3 md:p-4 md:pr-14 dark:border-white/10 dark:border-l-indigo-400 dark:bg-zinc-900/70'
           >
             {note.title ? (
               <strong className='line-clamp-1 text-sm font-semibold text-zinc-900 dark:text-zinc-100'>
@@ -124,12 +121,12 @@ export function NoteCard({ note, onUpdateNote, onDeleteNote }: NoteCardProps) {
               </strong>
             )}
 
-            <span className='line-clamp-4 flex-1 text-sm text-zinc-600 dark:text-zinc-300'>
+            <span className='hidden text-sm text-zinc-600 dark:text-zinc-300 md:line-clamp-4 md:flex md:flex-1'>
               {note.content}
             </span>
 
             <time
-              className='text-xs font-medium text-zinc-500 dark:text-zinc-400'
+              className='hidden text-xs font-medium text-zinc-500 dark:text-zinc-400 md:block'
               title={formatNoteDate(note.createdAt, 'full')}
             >
               {formatNoteDate(note.createdAt, 'relative')}
@@ -143,7 +140,7 @@ export function NoteCard({ note, onUpdateNote, onDeleteNote }: NoteCardProps) {
               event.stopPropagation()
               openEditMode()
             }}
-            className='absolute top-3 right-3 rounded-lg p-2.5 text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-lime-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lime-400 dark:hover:bg-zinc-700 dark:hover:text-lime-400 sm:p-2'
+            className='absolute top-1/2 right-2 -translate-y-1/2 rounded-lg p-2.5 text-lime-700 transition-colors hover:bg-lime-50 hover:text-lime-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lime-400 dark:text-indigo-300 dark:hover:bg-zinc-700 dark:hover:text-indigo-200 dark:focus-visible:ring-indigo-400 md:top-3 md:right-3 md:translate-y-0 md:p-2'
           >
             <Pencil className='size-5 sm:size-4' />
           </button>

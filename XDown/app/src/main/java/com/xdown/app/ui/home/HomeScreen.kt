@@ -93,6 +93,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import coil.request.videoFrameMillis
 import com.xdown.app.MediaFilter
 import com.xdown.app.XDownViewModel
 import com.xdown.app.data.MediaItem
@@ -644,7 +645,7 @@ private fun MediaTile(
             ),
     ) {
         AsyncImage(
-            model = imageRequest(LocalContext.current, item.previewUrl),
+            model = mediaPreviewRequest(LocalContext.current, item),
             contentDescription = item.tweetText,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop,
@@ -834,7 +835,21 @@ private fun imageRequest(context: Context, url: String?): ImageRequest {
         .data(url)
         .crossfade(true)
         .addHeader("User-Agent", NetworkModule.USER_AGENT)
+        .addHeader("Referer", "https://x.com/")
         .build()
+}
+
+private fun mediaPreviewRequest(context: Context, item: MediaItem): ImageRequest {
+    val image = item.imagePreviewUrl()
+    val builder = ImageRequest.Builder(context)
+        .crossfade(true)
+        .addHeader("User-Agent", NetworkModule.USER_AGENT)
+        .addHeader("Referer", "https://x.com/")
+    return if (image != null) {
+        builder.data(image).build()
+    } else {
+        builder.data(item.downloadUrl).videoFrameMillis(750).build()
+    }
 }
 
 private fun readClipboard(context: Context): String? {
