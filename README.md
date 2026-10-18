@@ -16,7 +16,6 @@ Monorepo com projetos de estudo e produção do portfólio **C0tr4x Dev**.
 | [`print-pdf/`](print-pdf/) | FlashPDF — impressão em lote de PDFs |
 | [`rifa-online/`](rifa-online/) | Rifa online (Supabase) |
 | [`SaveX/`](SaveX/) | Download local de vídeos públicos do X (Twitter) |
-| [`SANDBOX/`](SANDBOX/) | Hub / laboratório |
 | [`SkyDown/`](SkyDown/) | Download de mídia de perfis públicos do Bluesky |
 | [`terreiro-map/`](terreiro-map/) | Mapa de terreiros (Next.js + Supabase) · [demo](https://terreiro-map.vercel.app) |
 | [`XDown/`](XDown/) | Download de mídia de perfis públicos do X (Twitter) |
