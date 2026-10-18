@@ -31,6 +31,10 @@ A janela abre o livro em tela cheia de app. Perfil e arquivos copiados da interf
 
 O app é um WebView que carrega o mesmo `index.html`. Exige Android 10 (API 29) ou mais novo.
 
+**[Baixar CashBook.apk](https://github.com/RatyelAlves/sandbox/releases/download/cashbook-android-1.0/CashBook.apk)**
+
+Para gerar de novo a partir do código:
+
 1. Instale o [Android Studio](https://developer.android.com/studio).
 2. **File → Open** e escolha a pasta `cashbook/android`.
 3. Espere o Gradle sincronizar. O build copia `index.html` e `bg.jpg` da pasta pai para os assets.
