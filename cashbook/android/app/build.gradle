@@ -1,0 +1,52 @@
+plugins {
+    id "com.android.application"
+}
+
+android {
+    namespace "com.cotraxdev.cashbook"
+    compileSdk 35
+
+    defaultConfig {
+        applicationId "com.cotraxdev.cashbook"
+        minSdk 29
+        targetSdk 35
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+def webRoot = rootProject.file("../")
+
+tasks.register("syncCashBookAssets", Copy) {
+    from(webRoot) {
+        include "index.html"
+        include "bg.jpg"
+        include "icon.png"
+    }
+    into layout.projectDirectory.dir("src/main/assets")
+}
+
+tasks.register("syncLauncherIcon", Copy) {
+    from(new File(webRoot, "icon.png"))
+    into layout.projectDirectory.dir("src/main/res/drawable")
+    rename { "ic_launcher.png" }
+}
+
+tasks.named("preBuild").configure {
+    dependsOn syncCashBookAssets, syncLauncherIcon
+}
+
+dependencies {
+    implementation "androidx.webkit:webkit:1.12.1"
+}

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#121317" />
+  <title>SaveX</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Ccircle cx='24' cy='24' r='20' fill='none' stroke='%2300ba7c' stroke-width='4'/%3E%3Cpath d='M24 13v14M16.5 22.5 24 30l7.5-7.5M15 35h18' fill='none' stroke='%2300ba7c' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v={{ asset_v }}" />
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div class="brand">
+        <span class="logo" aria-hidden="true">
+          <svg viewBox="0 0 48 48">
+            <circle cx="24" cy="24" r="18.5" fill="none" stroke="currentColor" stroke-width="3.4"/>
+            <path d="M24 14.5v13.2M17.2 23.2 24 30l6.8-6.8" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M16.2 34.2h15.6" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="name">SaveX</span>
+      </div>
+      <button type="button" class="theme-switch" id="theme-switch" aria-label="Switch to light mode" aria-pressed="false">
+        <svg class="mark sun" viewBox="0 0 24 24" aria-hidden="true">
+          <g fill="currentColor">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M11 1.2h2V4h-2zm0 18.8h2V23h-2zM1.2 11H4v2H1.2zM20 11h2.8v2H20zM4.22 3.05l1.98 1.98-1.41 1.42L2.8 4.46zm13.99 13.98 1.98 1.98-1.41 1.42-1.99-1.98zM19.78 3.05l1.42 1.41-1.98 1.99-1.42-1.42zM4.22 17.03l1.42 1.42-1.98 1.98-1.42-1.41 1.98-1.99z"/>
+          </g>
+        </svg>
+        <svg class="mark moon" viewBox="0 0 48 30" aria-hidden="true">
+          <defs>
+            <mask id="savetwt-moon">
+              <rect width="48" height="30" fill="#000"/>
+              <circle cx="11" cy="15" r="9" fill="#fff"/>
+              <circle cx="16.6" cy="12.4" r="7.7" fill="#000"/>
+            </mask>
+          </defs>
+          <circle cx="11" cy="15" r="9" fill="currentColor" mask="url(#savetwt-moon)"/>
+          <path fill="currentColor" d="M33 3.4 34.3 8.2 39.2 9.5 34.3 10.8 33 15.6 31.7 10.8 26.8 9.5 31.7 8.2Z"/>
+          <path fill="currentColor" d="m41.4 17.2.85 2.7 2.8.85-2.8.85-.85 2.7-.85-2.7-2.8-.85 2.8-.85Z"/>
+        </svg>
+        <span class="knob"></span>
+      </button>
+    </header>
+
+    <section id="paste-view">
+      <form id="fetch-form" class="sheet paste-sheet">
+        <div class="paste-mark" aria-hidden="true">
+          <svg viewBox="0 0 48 48">
+            <circle cx="24" cy="24" r="18.5" fill="none" stroke="currentColor" stroke-width="3.2"/>
+            <path d="M24 14.5v13.2M17.2 23.2 24 30l6.8-6.8" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M16.2 34.2h15.6" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h1>Paste the video link</h1>
+        <p class="lede">Paste a Twitter / X link. Then choose the quality and download the MP4.</p>
+        <label class="field">
+          <span class="sr">Video link</span>
+          <input id="url" name="url" type="url" inputmode="url" autocomplete="off" spellcheck="false" placeholder="https://x.com/user/status/123..." required />
+        </label>
+        <p id="form-error" class="form-error" hidden></p>
+        <button type="submit" class="another" id="fetch-btn">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 4v10" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="m8 10 4 4 4-4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M5 19h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+          <span id="fetch-label">Get Video</span>
+        </button>
+      </form>
+    </section>
+
+    <section id="result-view" hidden>
+      <div class="preview">
+        <img id="thumb" alt="Video preview" />
+        <video id="player" playsinline preload="none" hidden></video>
+        <button type="button" class="play" id="play" aria-label="Play video">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M9 7.2v9.6L17.2 12 9 7.2z" fill="currentColor"/>
+          </svg>
+        </button>
+      </div>
+
+      <div id="picker" class="picker" hidden></div>
+
+      <div class="sheet">
+        <div class="ready">
+          <span class="check" aria-hidden="true">
+            <svg viewBox="0 0 48 48">
+              <circle cx="24" cy="24" r="16" fill="none" stroke="currentColor" stroke-width="3.2"/>
+              <path d="M16.5 24.5 21.5 29.5 32 18.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <div>
+            <h2>Video is ready to Download.</h2>
+            <p>Choose your preferred quality below.</p>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Format</th>
+                <th>Quality</th>
+                <th>Download Link</th>
+              </tr>
+            </thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <button type="button" class="another again" id="again">
+        <span class="plus" aria-hidden="true">+</span>
+        <span>Download Another Video</span>
+      </button>
+    </section>
+  </main>
+  <script src="{{ url_for('static', filename='app.js') }}?v={{ asset_v }}"></script>
+</body>
+</html>

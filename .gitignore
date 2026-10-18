@@ -69,3 +69,7 @@ Desktop.ini
 # Pastas temporarias locais
 esthetic-flow/_sandbox_check/
 esthetic-flow/sandbox-push/
+
+# BF Down — perfil do navegador e downloads locais
+BF Down/perfil/
+BF Down/downloads/
